@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Canteen_app</string>
+
+    <!-- Konten form login -->
+    <string name="lg_title">Selamat Datang</string>
+    <string name="lg_isi">Silahkan login ke akun Anda</string>
+    <string name="lg_email">Email</string>
+    <string name="lg_password">Password</string>
+    <string name="lg_lupa_pw">Lupa Password?</string>
+    <string name="lg_regis">Belum punya akun? Daftar Sekarang</string>
 </resources>

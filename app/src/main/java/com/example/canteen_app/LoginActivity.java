@@ -1,61 +1,136 @@
 package com.example.canteen_app;
 
-import android.os.Bundle;
+//import android.os.Bundle;
+//
+//import android.telecom.Call;
+//import android.widget.Button;
+//import androidx.activity.EdgeToEdge;
+//import androidx.annotation.NonNull;
+//import androidx.appcompat.app.AppCompatActivity;
+//import androidx.core.graphics.Insets;
+//import androidx.core.view.ViewCompat;
+//import androidx.core.view.WindowInsetsCompat;
+//import android.content.Intent;
+//import android.graphics.Color;
+//import android.text.SpannableString;
+//import android.text.Spanned;
+//import android.text.method.LinkMovementMethod;
+//import android.text.style.ClickableSpan;
+//import android.text.style.ForegroundColorSpan;
+//import android.view.View;
+//import android.widget.EditText;
+//import android.widget.TextView;
+//import android.widget.Toast;
+//
+//import java.util.HashMap;
+//
+//import okhttp3.Response;
+//import retrofit2.Call;
+//import retrofit2.Callback;
+//import retrofit2.Response;
 
-import android.widget.Button;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button btnpenjual, btnpembeli;
+    private Button btnpenjual, btnpembeli, btnMasuk;
+    private EditText etEmail, etPassword;
+    private TextView tvDaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
-        // Button Color Active
+//        Inisialisasi View
         btnpembeli = findViewById(R.id.btn_pembeli);
         btnpenjual = findViewById(R.id.btn_penjual);
+        btnMasuk = findViewById(R.id.btn_masuk);
+        etEmail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_password);
+        tvDaftar = findViewById(R.id.tv_daftar);
 
-        // 1. Set kondisi awal (Misal login yang aktif)
+//        Kondisi awal button active
         btnpembeli.setSelected(true);
         btnpenjual.setSelected(false);
 
-        // 2. Klik Login
+//        Trigger tombol pembeli
         btnpembeli.setOnClickListener(v -> {
             btnpembeli.setSelected(true);
             btnpenjual.setSelected(false);
-            // Tambahkan perintah pindah fragment atau lainnya
         });
 
-        // 3. Klik Register
+//       trigger tombol penjual
         btnpenjual.setOnClickListener(v -> {
             btnpenjual.setSelected(true);
             btnpembeli.setSelected(false);
-            // Tambahkan perintah pindah fragment atau lainnya
         });
 
+//Handle login
+        btnMasuk.setOnClickListener(v -> {
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Mohon isi semua data", Toast.LENGTH_SHORT);
+                return;
+            }
+            prosessLogin(email, password);
+        });
+    }
+
+//    Method untuk HIT API Auth Login
+    private void prosessLogin(String email, String password) {
+
+//        Inisialisasi data sesuai data backend
+        HashMap<String, String> body = new HashMap<>();
+        body.put("email", email);
+        body.put("password", password);
+
+//        HIT API
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<LoginResponse> call = apiService.loginUser(body);
+
+//        Konfigurasi Request
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+//                Apabila Login Berhasil
+                    String nameUser = response.body().getData().getFullname();
+                    Toast.makeText(LoginActivity.this, "Selamat Datang" + nameUser, Toast.LENGTH_SHORT).show();
+
+//                    Pindah ke MainActivity
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); //Tutup halaman login
+                } else {
+//                    Login Gagal
+                    Toast.makeText(LoginActivity.this, "Email atau password salah!", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+//                Apabila server mati
+                Toast.makeText(LoginActivity.this, "Kesalahan server: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 //        Mulai disini ke register
 //        // Text Daftar Sekarang
@@ -90,5 +165,4 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 //}
 
-    }
 }

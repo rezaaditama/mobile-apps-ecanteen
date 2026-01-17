@@ -12,7 +12,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/Logo_keKantin"
+        android:src="@drawable/logo_kekantin"
         android:contentDescription="Logo Aplikasi"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

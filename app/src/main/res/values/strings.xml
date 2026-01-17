@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Canteen_app</string>
+    <!-- Konten form login -->
+    <string name="lg_title">Registrasi</string>
+    <string name="lg_email">Email</string>
+    <string name="lg_no_handphone">No Handpone</string>
+    <string name="lg_password">Password</string>
+    <string name="lg_confirm_password">Confirm Password</string>
 </resources>

@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private int waktu = 5000;
+    private int waktu = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent splash = new Intent(MainActivity.this, LoginActivity.class);
+                Intent splash = new Intent(SplashScreen.this, LoginActivity.class);
                 startActivity(splash);
                 finish();
             }

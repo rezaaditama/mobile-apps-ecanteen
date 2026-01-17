@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/bg_switch"
+            android:background="@drawable/bg_switch2"
             android:padding="4dp">
 
             <Button
@@ -56,7 +56,7 @@
                 android:text="Pembeli"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_regular"
-                android:background="@drawable/selector_button_login"
+                android:background="@drawable/selector_button_registrasi"
                 android:backgroundTint="@null"
                 android:textColor="#FFFFFF"/>
 
@@ -68,11 +68,10 @@
                 android:text="Penjual"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins_regular"
-                android:background="@drawable/selector_button_login"
+                android:background="@drawable/selector_button_registrasi"
                 android:backgroundTint="@null"
                 android:textColor="#ffffff"/>
         </LinearLayout>
-
         <!-- Student ID -->
         <TextView
             android:id="@+id/textView"
@@ -90,7 +89,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_input"
             android:padding="15dp"
-            android:inputType="number" />
+            android:inputType="textEmailAddress" />
 
         <!-- Password -->
         <TextView
@@ -134,13 +133,17 @@
 
         <!-- OR -->
         <TextView
+            android:id="@+id/tv_daftar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lg_regis"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:textSize="15sp"
-            android:layout_marginTop="10dp"
-            android:textColor="#999999" />
+            android:layout_marginBottom="20dp"
+            android:textColor="#468f41"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless" />
 
     </LinearLayout>
 

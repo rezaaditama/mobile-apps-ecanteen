@@ -1,94 +1,52 @@
 package com.example.canteen_app;
 
-import android.os.Bundle;
-
-import android.widget.Button;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
-import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
+import android.graphics.Paint;
+import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    private Button btnpenjual, btnpembeli;
+
+    private Button btnPembeli, btnPenjual;
+    private TextView tvDaftar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
-        // Button Color Active
-        btnpembeli = findViewById(R.id.btn_pembeli);
-        btnpenjual = findViewById(R.id.btn_penjual);
+        // INIT VIEW
+        btnPembeli = findViewById(R.id.btn_pembeli);
+        btnPenjual = findViewById(R.id.btn_penjual);
+        tvDaftar   = findViewById(R.id.tv_daftar);
 
-        // 1. Set kondisi awal (Misal login yang aktif)
-        btnpembeli.setSelected(true);
-        btnpenjual.setSelected(false);
+        // underline "Daftar"
+        tvDaftar.setPaintFlags(tvDaftar.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        // 2. Klik Login
-        btnpembeli.setOnClickListener(v -> {
-            btnpembeli.setSelected(true);
-            btnpenjual.setSelected(false);
-            // Tambahkan perintah pindah fragment atau lainnya
+        // DEFAULT: Pembeli aktif
+        btnPembeli.setSelected(true);
+        btnPenjual.setSelected(false);
+
+        // Klik Pembeli
+        btnPembeli.setOnClickListener(v -> {
+            btnPembeli.setSelected(true);
+            btnPenjual.setSelected(false);
         });
 
-        // 3. Klik Register
-        btnpenjual.setOnClickListener(v -> {
-            btnpenjual.setSelected(true);
-            btnpembeli.setSelected(false);
-            // Tambahkan perintah pindah fragment atau lainnya
+        // Klik Penjual
+        btnPenjual.setOnClickListener(v -> {
+            btnPenjual.setSelected(true);
+            btnPembeli.setSelected(false);
         });
 
-
-
-//        Mulai disini ke register
-//        // Text Daftar Sekarang
-//        TextView tvDaftar = findViewById(R.id.tv_daftar);
-//
-//        String text = "Belum punya akun? Daftar Sekarang";
-//        SpannableString spannableString = new SpannableString(text);
-//
-//        int start = text.indexOf("Daftar Sekarang");
-//        int end = start + "Daftar Sekarang".length();
-//
-//        // Warna hijau
-//        spannableString.setSpan(
-//                new ForegroundColorSpan(Color.parseColor("#468f41")),
-//                start,
-//                end,
-//                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-//        );
-//
-//        // Klikable
-//        spannableString.setSpan(new ClickableSpan() {
-//            @Override
-//            public void onClick(View widget) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//            }
-//        }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//        tvDaftar.setText(spannableString);
-//        tvDaftar.setMovementMethod(LinkMovementMethod.getInstance());
-//        tvDaftar.setHighlightColor(Color.TRANSPARENT);
-//    }
-//}
-
+        // Klik Daftar → Register
+        tvDaftar.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, Register.class));
+        });
     }
 }

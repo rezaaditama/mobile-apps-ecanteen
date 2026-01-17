@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fdf8f2">
@@ -22,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lg_title"
+        android:text="@string/lg_title2"
         android:textStyle="bold"
         android:textSize="24sp"
         android:layout_marginTop="20dp"
@@ -31,39 +32,62 @@
         android:layout_gravity="center_horizontal"/>
 
         <!-- Buyer & Seller Button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/bg_switch2"
-        android:padding="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_switch2"
+            android:padding="4dp">
 
-        <Button
-            android:id="@+id/btn_pembeli"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="Pembeli"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_regular"
-            android:background="@drawable/selector_button_login2"
-            android:backgroundTint="@null"
-            android:textColor="#FFFFFF"/>
+            <Button
+                android:id="@+id/btn_pembeli"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Pembeli"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@drawable/selector_button_registrasi"
+                android:backgroundTint="@null"
+                android:textColor="#FFFFFF"/>
 
-        <Button
-            android:id="@+id/btn_penjual"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="Penjual"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_regular"
-            android:background="@drawable/selector_button_login2"
-            android:backgroundTint="@null"
-            android:textColor="#ffffff"/>
+            <Button
+                android:id="@+id/btn_penjual"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Penjual"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_regular"
+                android:background="@drawable/selector_button_registrasi"
+                android:backgroundTint="@null"
+                android:textColor="#ffffff"/>
     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_penjual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="16dp">
 
-    <!-- Student ID -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Toko"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/et_nama_toko"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Masukkan Nama Toko"
+                android:background="@drawable/bg_input2"
+                android:padding="15dp"/>
+        </LinearLayout>
+
+
+        <!-- Student ID -->
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
@@ -80,7 +104,8 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_input2"
         android:padding="15dp"
-        android:inputType="number" />
+        android:inputType="textEmailAddress" />
+
 
         <TextView
         android:id="@+id/tv_no_handphone"
@@ -89,7 +114,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_regular"
-        android:text="@string/lg_no_handphone" />
+        android:text="@string/lg_no_handphone2" />
 
 
         <EditText
@@ -114,7 +139,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Masukkan Password"
+        android:hint="Masukan Password"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_input2"
         android:padding="15dp"
@@ -127,7 +152,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/black"
         android:fontFamily="@font/poppins_regular"
-        android:text="@string/lg_confirm_password" />
+        android:text="@string/lg_confirm_password2" />
 
         <EditText
             android:layout_width="match_parent"
@@ -144,13 +169,27 @@
 
 
     <Button
+        android:id="@+id/btn_daftar"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="Daftar"
         android:layout_marginTop="20dp"
-        android:background="@drawable/bg_login2"
+        android:background="@drawable/bg_registrasi"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_masuk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lg_regis2"
+            android:layout_gravity="center_horizontal"
+            android:textSize="15sp"
+            android:layout_marginBottom="20dp"
+            android:textColor="#468f41"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless" />
 
 
 

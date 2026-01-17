@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnPembeli, btnPenjual;
+    private Button btnPembeli, btnPenjual, btnMasuk;
     private TextView tvDaftar;
 
     @Override
@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         btnPembeli = findViewById(R.id.btn_pembeli);
         btnPenjual = findViewById(R.id.btn_penjual);
         tvDaftar   = findViewById(R.id.tv_daftar);
+        btnMasuk = findViewById(R.id.btn_masuk);
 
         // underline "Daftar"
         tvDaftar.setPaintFlags(tvDaftar.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -47,6 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         // Klik Daftar → Register
         tvDaftar.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, Register.class));
+        });
+
+//        Redirect login ke beranda
+        btnMasuk.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
         });
     }
 }

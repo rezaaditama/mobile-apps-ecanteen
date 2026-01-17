@@ -29,6 +29,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".BerandaActivity"
+            android:exported="false" />
+
 
     </application>
 

@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Canteen_app" parent="Base.Theme.Canteen_app" />
+
+    <style name="circleImage">
+        <item name="cornerSize">50%</item>
+    </style>>
 </resources>

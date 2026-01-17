@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    General-->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="krem">#fdf8f2</color>
+    <color name="secondary">#468f41</color>
+    <color name="primary">#f39c12</color>
+
+
+
+<!--    Beranda Color-->
+    <color name="profile_circle">#E93E3E</color>
+
 </resources>

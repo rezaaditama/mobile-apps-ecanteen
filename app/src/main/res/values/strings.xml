@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">Canteen_app</string>
+    <!-- Konten form Regist -->
+    <string name="lg_title2">Registrasi</string>
+    <string name="lg_email2">Email</string>
+    <string name="lg_no_handphone2">No Handpone</string>
+    <string name="lg_password2">Password</string>
+    <string name="lg_confirm_password2">Confirm Password</string>
+
     <!-- Konten form login -->
-    <string name="lg_title">Registrasi</string>
+    <string name="lg_title">Selamat Datang</string>
+    <string name="lg_isi">Silahkan login ke akun Anda</string>
     <string name="lg_email">Email</string>
-    <string name="lg_no_handphone">No Handpone</string>
     <string name="lg_password">Password</string>
-    <string name="lg_confirm_password">Confirm Password</string>
+    <string name="lg_lupa_pw">Lupa Password?</string>
+    <string name="lg_regis">Belum punya akun? Daftar Sekarang</string>
 </resources>

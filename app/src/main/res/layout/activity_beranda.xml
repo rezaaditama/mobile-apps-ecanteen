@@ -125,58 +125,58 @@
 
     </LinearLayout>
 
-    <HorizontalScrollView
-        android:id="@+id/hsv_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_layout">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
-            <Button
-                android:id="@+id/btn_semua"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/btn_toogle_active"
-                android:text="semua"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="8dp" />
-            <Button
-                android:id="@+id/btn_makanan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/btn_toogle_inactive"
-                android:text="makanan"
-                android:textColor="@color/primary"
-                android:textAllCaps="false"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="8dp" />
-            <Button
-                android:id="@+id/btn_minuman"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/btn_toogle_inactive"
-                android:text="minuman"
-                android:textColor="@color/primary"
-                android:textAllCaps="false"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="8dp" />
-        </LinearLayout>
-    </HorizontalScrollView>
+<!--    <HorizontalScrollView-->
+<!--        android:id="@+id/hsv_categories"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:scrollbars="none"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/search_layout">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:paddingHorizontal="10dp">-->
+<!--            <Button-->
+<!--                android:id="@+id/btn_semua"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="4dp"-->
+<!--                android:background="@drawable/btn_toogle_active"-->
+<!--                android:text="semua"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:padding="8dp" />-->
+<!--            <Button-->
+<!--                android:id="@+id/btn_makanan"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="4dp"-->
+<!--                android:background="@drawable/btn_toogle_inactive"-->
+<!--                android:text="makanan"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:padding="8dp" />-->
+<!--            <Button-->
+<!--                android:id="@+id/btn_minuman"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="4dp"-->
+<!--                android:background="@drawable/btn_toogle_inactive"-->
+<!--                android:text="minuman"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:minWidth="0dp"-->
+<!--                android:minHeight="0dp"-->
+<!--                android:padding="8dp" />-->
+<!--        </LinearLayout>-->
+<!--    </HorizontalScrollView>-->
 
     <RelativeLayout
         android:id="@+id/layout_rekomendasi"
@@ -186,22 +186,14 @@
         android:paddingHorizontal="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hsv_categories">
+        app:layout_constraintTop_toBottomOf="@+id/search_layout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rekomendasi"
+            android:text="Daftar Toko"
             android:textColor="@color/secondary"
             android:textSize="20sp"
             android:textStyle="bold" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Lihat Semua"
-            android:textColor="@color/secondary"
-            android:textStyle="bold"/>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -246,7 +238,7 @@
                 android:id="@+id/tv_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="Beranda"
                 android:textSize="12sp"
                 android:textColor="@color/primary" />
         </LinearLayout>
@@ -268,7 +260,7 @@
                 android:id="@+id/tv_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Orders"
+                android:text="Pesanan"
                 android:textSize="12sp"
                 android:textColor="#9E9E9E" />
         </LinearLayout>
@@ -290,7 +282,7 @@
                 android:id="@+id/tv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Profile"
+                android:text="Profil"
                 android:textSize="12sp"
                 android:textColor="#9E9E9E" />
         </LinearLayout>

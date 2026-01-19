@@ -1,5 +1,6 @@
 package com.example.canteen_app;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +51,9 @@ public class BerandaActivity extends AppCompatActivity {
 //        btnMakanan.setOnClickListener(v -> setTombolAktif(btnMakanan, btnSemua, btnMinuman));
 //        btnMinuman.setOnClickListener(v -> setTombolAktif(btnMinuman, btnSemua, btnMakanan));
 
+//        Panggil navigasi
+        setupNavigation();
+
 //    Fetching Data
     prepareData();
 
@@ -81,6 +85,8 @@ public class BerandaActivity extends AppCompatActivity {
             // Intent intent = new Intent(BerandaActivity.this, OrdersActivity.class);
             // startActivity(intent);
             // overridePendingTransition(0, 0); // Menghilangkan animasi agar transisi smooth
+            Intent intent = new Intent(BerandaActivity.this, DetailTokoActivity.class);
+            startActivity(intent);
         });
 
         navProfile.setOnClickListener(v -> {

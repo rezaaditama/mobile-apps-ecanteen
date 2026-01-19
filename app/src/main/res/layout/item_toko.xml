@@ -38,7 +38,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_kategori_toko"
+                android:id="@+id/tv_lokasi_toko"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Kantin UIKA Lantai 1"

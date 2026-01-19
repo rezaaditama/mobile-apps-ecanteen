@@ -53,7 +53,7 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.TokoViewHolder
             super(itemView);
             imgToko = itemView.findViewById(R.id.img_toko);
             tvNama = itemView.findViewById(R.id.tv_nama_toko);
-            tvLokasi = itemView.findViewById(R.id.tv_kategori_toko);
+            tvLokasi = itemView.findViewById(R.id.tv_lokasi_toko);
         }
     }
 }

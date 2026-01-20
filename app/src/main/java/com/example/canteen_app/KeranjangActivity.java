@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class KeranjangActivity extends AppCompatActivity {
 //    Deklarasi Variabel
 private RecyclerView rvKeranjang;
     private TextView tvHargaTotal, tvEmptyCart;
-    private MenuAdapter adapter; // Gunakan MenuAdapter yang sudah ada atau buat CartAdapter
+    private MenuAdapter adapter;
     private List<Menu> listKeranjang;
 
 
@@ -39,13 +40,14 @@ private RecyclerView rvKeranjang;
         tvHargaTotal = findViewById(R.id.tvKrjHargaTotal);
         tvEmptyCart = findViewById(R.id.tv_empty_cart);
 
-//        COBA
+//        Pindah ke halaman checkout
         findViewById(R.id.btnKrjCheckout).setOnClickListener(v -> {
-            CartManager.getInstance().clearCart(); // Hapus data
-            updateTotalHarga(); // Update UI
-            checkIfEmpty(); // Tampilkan teks "Keranjang Kosong"
-            Toast.makeText(this, "Checkout Berhasil (Dummy)", Toast.LENGTH_SHORT).show();
-        });
+            if (listKeranjang != null && !listKeranjang.isEmpty()) {
+                Intent intent = new Intent(KeranjangActivity.this, CheckoutActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Keranjang Anda masih kosong!", Toast.LENGTH_SHORT).show();
+            }});
 
 //        Tombol kembali
         findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> finish());

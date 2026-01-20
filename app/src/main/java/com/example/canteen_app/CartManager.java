@@ -10,6 +10,17 @@ public class CartManager {
     private List<Menu> cartList = new ArrayList<>();
 
     private CartManager() {}
+    private List<Order> historyList = new ArrayList<>();
+
+//    Tambahkan pesanan baru
+    public void addOrderToHistory(Order order) {
+        historyList.add(0, order);
+    }
+
+    // Ambil semua daftar riwayat
+    public List<Order> getHistoryList() {
+        return historyList;
+    }
 
 //    Mengambil instance dari singleton
     public static CartManager getInstance() {

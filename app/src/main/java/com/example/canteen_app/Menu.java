@@ -11,6 +11,7 @@ public class Menu implements Serializable{
     private int product_id;
     private int shop_id;
     private String shop_name;
+    private boolean isFinished = false;
 
 
 
@@ -27,6 +28,7 @@ public class Menu implements Serializable{
     public String getProductName() { return product_name; }
     public int getProductPrice() { return product_price; }
     public int getProductPath() { return product_path; }
+    public boolean isFinished() { return isFinished; }
     public int getQty() { return qty; }
     public String getNote() { return note; }
     public int getProductId() { return product_id; }
@@ -36,4 +38,5 @@ public class Menu implements Serializable{
 //    Setter
     public void setQty(int qty) { this.qty = qty; }
     public void setNote(String note) { this.note = note; }
+    public void setFinished(boolean finished) { isFinished = finished; }
 }

@@ -37,37 +37,51 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     @Override
     public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
         Menu menu = menuList.get(position);
-        holder.tvNama.setText(menu.getNama());
-        holder.tvHarga.setText("Rp " + String.format("%,d", menu.getHarga()).replace(',', '.'));
-        holder.imgMenu.setImageResource(menu.getGambar());
 
-        final int[] qty = {0};
+//        Get product
+        holder.tvNama.setText(menu.getProductName());
+        holder.tvHarga.setText("Rp " + String.format("%,d", menu.getProductPrice()).replace(',', '.'));
+        holder.imgMenu.setImageResource(menu.getProductPath());
+
+//        Set Qty
+        holder.tvQty.setText(String.valueOf(menu.getQty()));
+
+//        Tampilan awal qty
+        if (menu.getQty() > 0) {
+            holder.btnMinus.setVisibility(View.VISIBLE);
+            holder.tvQty.setVisibility(View.VISIBLE);
+        } else {
+            holder.btnMinus.setVisibility(View.GONE);
+            holder.tvQty.setVisibility(View.GONE);
+        }
 
         // Tombol TAMBAH (+)
         holder.btnPlus.setOnClickListener(v -> {
-            if (qty[0] == 0) {
-                showNoteDialog(menu.getNama());
+            if (menu.getQty() == 0) {
+                showNoteDialog(menu); // Kirim objek menu agar catatan tersimpan
                 holder.btnMinus.setVisibility(View.VISIBLE);
                 holder.tvQty.setVisibility(View.VISIBLE);
             }
-            qty[0]++;
-            holder.tvQty.setText(String.valueOf(qty[0]));
 
-            // Update Total
-            totalHarga += menu.getHarga();
+            // update qty
+            menu.setQty(menu.getQty() + 1);
+            holder.tvQty.setText(String.valueOf(menu.getQty()));
+
+            totalHarga += menu.getProductPrice();
             listener.onTotalChanged(totalHarga);
         });
 
         // Tombol KURANG (-)
         holder.btnMinus.setOnClickListener(v -> {
-            if (qty[0] > 0) {
-                qty[0]--;
-                holder.tvQty.setText(String.valueOf(qty[0]));
+            if (menu.getQty() > 0) {
+                // 4. PERBAIKAN: Kurangi qty di dalam objek Menu
+                menu.setQty(menu.getQty() - 1);
+                holder.tvQty.setText(String.valueOf(menu.getQty()));
 
-                totalHarga -= menu.getHarga();
+                totalHarga -= menu.getProductPrice();
                 listener.onTotalChanged(totalHarga);
 
-                if (qty[0] == 0) {
+                if (menu.getQty() == 0) {
                     holder.btnMinus.setVisibility(View.GONE);
                     holder.tvQty.setVisibility(View.GONE);
                 }
@@ -75,19 +89,29 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         });
     }
 
-    private void showNoteDialog(String namaMenu) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Catatan untuk " + namaMenu);
-        final EditText input = new EditText(context);
-        input.setHint("Contoh: Tidak pakai sambal...");
-        builder.setView(input);
-        builder.setPositiveButton("Simpan", (dialog, which) -> dialog.dismiss());
-        builder.show();
-    }
+//    Modals Notes untuk penjual
+private void showNoteDialog(Menu menu) {
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle("Catatan untuk " + menu.getProductName());
 
+    final EditText input = new EditText(context);
+    input.setHint("Contoh: Tidak pakai sambal...");
+    input.setText(menu.getNote()); // Tampilkan catatan lama jika ada
+
+    builder.setView(input);
+    builder.setPositiveButton("Simpan", (dialog, which) -> {
+        // SIMPAN CATATAN KE OBJEK MENU
+        menu.setNote(input.getText().toString());
+    });
+    builder.setNegativeButton("Batal", (dialog, which) -> dialog.dismiss());
+    builder.show();
+}
+
+// Get Item Count
     @Override
     public int getItemCount() { return menuList.size(); }
 
+//    Recycle Item
     public static class MenuViewHolder extends RecyclerView.ViewHolder {
         TextView tvNama, tvHarga, tvQty;
         ImageView imgMenu;

@@ -84,9 +84,9 @@ public class BerandaActivity extends AppCompatActivity {
             // Un-comment baris di bawah jika OrdersActivity sudah dibuat
             // Intent intent = new Intent(BerandaActivity.this, OrdersActivity.class);
             // startActivity(intent);
-            // overridePendingTransition(0, 0); // Menghilangkan animasi agar transisi smooth
-            Intent intent = new Intent(BerandaActivity.this, DetailTokoActivity.class);
-            startActivity(intent);
+//            // overridePendingTransition(0, 0); // Menghilangkan animasi agar transisi smooth
+//            Intent intent = new Intent(BerandaActivity.this, DetailTokoActivity.class);
+//            startActivity(intent);
         });
 
         navProfile.setOnClickListener(v -> {

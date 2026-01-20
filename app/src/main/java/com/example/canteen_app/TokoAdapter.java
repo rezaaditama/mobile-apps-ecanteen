@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,13 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.TokoViewHolder
 
 //        Persiapan untuk pindah ke daftar menu
         holder.itemView.setOnClickListener(v -> {
-//            Logika disini
+            Intent intent = new Intent(context, DetailTokoActivity.class);
+
+//            Mengirim ID toko dan nama toko
+            intent.putExtra("NAMA_TOKO", toko.getShop_name());
+            intent.putExtra("ID_TOKO", toko.getShop_id());
+
+            context.startActivity(intent);
         });
     }
 

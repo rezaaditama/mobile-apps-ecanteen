@@ -8,32 +8,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Canteen_app">
-
+        <activity
+            android:name=".StatusCodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StatusQrisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PesananSelesaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PesananAktifActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-
         <activity
             android:name=".Register"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".BerandaActivity"
             android:exported="false" />
-
-
     </application>
 
 </manifest>

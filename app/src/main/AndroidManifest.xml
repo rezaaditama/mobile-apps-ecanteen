@@ -9,6 +9,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Canteen_app">
         <activity
+            android:name=".StatusCodActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StatusQrisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PesananSelesaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PesananAktifActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailTokoActivity"
             android:exported="false" />
         <activity

@@ -83,8 +83,8 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
             } else {
                 // Untuk sementara kita biarkan begini sampai Anda siap membuat CartActivity
                 Toast.makeText(this, "Menuju Halaman Keranjang...", Toast.LENGTH_SHORT).show();
-                // Intent intent = new Intent(this, CartActivity.class);
-                // startActivity(intent);
+                 Intent intent = new Intent(this, KeranjangActivity.class);
+                 startActivity(intent);
             }
         });
     }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cream"
+    android:background="@color/krem"
     tools:context=".KeranjangActivity">
 
     <!-- HEADER -->
@@ -17,15 +17,13 @@
         android:paddingHorizontal="16dp"
         android:gravity="center_vertical"
         android:background="@color/white"
-        app:layout_collapseMode="pin">
-
+        android:elevation="4dp">
         <ImageButton
             android:id="@+id/imgKrjArrowLeft"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/lingkaran_putih"
-            android:src="@drawable/arrow_left" />
-
+            android:src="@drawable/ic_arrow_back" />
         <TextView
             android:id="@+id/tvKeranjang"
             android:layout_width="0dp"
@@ -36,14 +34,13 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_bold"/>
-
         <View
             android:layout_width="40dp"
             android:layout_height="40dp"/>
     </LinearLayout>
 
-    <!-- CONTENT -->
-    <ScrollView
+<!--    Content-->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="64dp"
@@ -55,282 +52,52 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- WARUNG CARD -->
-            <com.google.android.material.card.MaterialCardView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_keranjang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/orange_muda_banget">
-
-                <LinearLayout
+                tools:listitem="@layout/item_menu"
+                android:nestedScrollingEnabled="false" />
+                <TextView
+                    android:id="@+id/tv_empty_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/orange_muda_banget"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvKrjWarung1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/warung_makmur"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/poppins_bold"/>
-
-                    <!-- ITEM -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="12dp">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            app:cardCornerRadius="16dp"
-                            app:cardElevation="0dp">
-
-                            <ImageView
-                                android:id="@+id/imgKrjFotoProduk1"
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/nasi_goreng" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <LinearLayout
-                            android:layout_width="64dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tvKrjMenu1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="@string/nasi_goreng"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                            <TextView
-                                android:id="@+id/tvKrjHarga1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/price_25000"
-                                android:textColor="@color/hijau"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:background="@color/orange_muda"
-                            android:padding="4dp">
-
-                            <Button
-                                android:id="@+id/btnKrjMinus1"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:text="-"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/poppins_regular"
-                                android:backgroundTint="@color/orange"
-                                android:minWidth="0dp"
-                                android:minHeight="0dp"
-                                android:padding="0dp"/>
-
-                            <TextView
-                                android:id="@+id/tvKrjQuantity"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2"
-                                android:paddingHorizontal="12dp"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                            <Button
-                                android:id="@+id/btnKrjPlus1"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:text="+"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/poppins_regular"
-                                android:backgroundTint="@color/orange"
-                                android:minWidth="0dp"
-                                android:minHeight="0dp"
-                                android:padding="0dp"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- WARUNG CARD -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/orange_muda_banget">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/orange_muda_banget"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:id="@+id/tvKrjWarung2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/warung_rismacan"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/poppins_bold"/>
-
-                    <!-- ITEM -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="12dp">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            app:cardCornerRadius="16dp"
-                            app:cardElevation="0dp">
-
-                            <ImageView
-                                android:id="@+id/imgKrjFotoProduk2"
-                                android:layout_width="64dp"
-                                android:layout_height="64dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/es_teh" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <LinearLayout
-                            android:layout_width="64dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingStart="12dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tvKrjMenu2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="@string/es_teh"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                            <TextView
-                                android:id="@+id/tvKrjHarga2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="@string/price_3000"
-                                android:textColor="@color/hijau"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:background="@color/orange_muda"
-                            android:padding="4dp">
-
-                            <Button
-                                android:id="@+id/btnKrjMinus2"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:text="-"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/poppins_regular"
-                                android:backgroundTint="@color/orange"
-                                android:minWidth="0dp"
-                                android:minHeight="0dp"
-                                android:padding="0dp"/>
-
-                            <TextView
-                                android:id="@+id/tvKrjQuantity2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2"
-                                android:paddingHorizontal="12dp"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/poppins_bold"/>
-
-                            <Button
-                                android:id="@+id/btnKrjPlus2"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:text="+"
-                                android:textColor="@color/white"
-                                android:fontFamily="@font/poppins_regular"
-                                android:backgroundTint="@color/orange"
-                                android:minWidth="0dp"
-                                android:minHeight="0dp"
-                                android:padding="0dp"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-
+                    android:text="Keranjang kosong"
+                    android:gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/poppins_regular"/>
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </ScrollView>
-
-    <!-- BOTTOM TOTAL -->
     <LinearLayout
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_gravity="bottom"
         android:orientation="vertical"
         android:padding="16dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:elevation="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
-
             <TextView
                 android:id="@+id/tvKrjTotal"
-                android:layout_width="242dp"
-                android:layout_height="27dp"
-                android:text="@string/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Pembayaran"
                 android:fontFamily="@font/poppins_regular"
-                android:gravity="center_vertical"
-                android:textColor="@color/gray" />
-
+                android:textColor="#757575" />
             <TextView
                 android:id="@+id/tvKrjHargaTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:text="@string/total_price"
+                android:text="Rp 0"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:fontFamily="@font/poppins_bold"/>
@@ -340,11 +107,11 @@
             android:id="@+id/btnKrjCheckout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="@string/checkout"
-            android:backgroundTint="@color/hijau"
+            android:text="Checkout Sekarang"
+            android:backgroundTint="@color/secondary"
             android:textColor="@color/white"
+            android:textAllCaps="false"
             android:fontFamily="@font/poppins_bold"
             android:layout_marginTop="12dp"/>
     </LinearLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

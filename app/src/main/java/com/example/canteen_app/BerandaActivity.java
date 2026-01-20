@@ -82,11 +82,10 @@ public class BerandaActivity extends AppCompatActivity {
     private void setupNavigation(){
         navOrders.setOnClickListener(v -> {
             // Un-comment baris di bawah jika OrdersActivity sudah dibuat
-            // Intent intent = new Intent(BerandaActivity.this, OrdersActivity.class);
-            // startActivity(intent);
-//            // overridePendingTransition(0, 0); // Menghilangkan animasi agar transisi smooth
-//            Intent intent = new Intent(BerandaActivity.this, DetailTokoActivity.class);
-//            startActivity(intent);
+             Intent intent = new Intent(BerandaActivity.this, PesananAktifActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+
         });
 
         navProfile.setOnClickListener(v -> {

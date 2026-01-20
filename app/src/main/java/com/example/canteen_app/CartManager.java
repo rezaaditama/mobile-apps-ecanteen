@@ -32,6 +32,11 @@ public class CartManager {
         if (menu.getQty() > 0) cartList.add(menu);
     }
 
+//    Hapus Ketika berhasil checkout
+public void clearCart() {
+    cartList.clear();
+}
+
 //    Mengambil data keranjang
     public List<Menu> getCartList() { return cartList; }
 

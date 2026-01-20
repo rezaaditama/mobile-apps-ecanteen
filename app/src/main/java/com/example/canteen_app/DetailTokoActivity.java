@@ -2,6 +2,7 @@ package com.example.canteen_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,17 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailTokoActivity extends AppCompatActivity implements CardListener {
-//    Deklarasi Komponen
 
+//    Deklarasi Komponen
     private RecyclerView rvMenu;
-    private TextView tvTotalPrice, tvNamaTokoHeader;
+    private TextView tvTotalProduct, tvNamaTokoHeader;
     private MenuAdapter adapter;
     private List<Menu> listDataMenu;
-    private Button btnCheckout;
+    private Button btnCart;
 
     // Variabel untuk menampung data dari Intent
-    private int idToko;
-    private String namaToko;
+    private int shopId;
+    private String shopName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +46,29 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
 
         // Inisialisasi View berdasarkan id
         rvMenu = findViewById(R.id.rv_daftar_toko);
-        tvTotalPrice = findViewById(R.id.tv_total_price);
+        tvTotalProduct = findViewById(R.id.tv_total_product);
         tvNamaTokoHeader = findViewById(R.id.tv_nama_toko); // Pastikan ID ini ada di XML
-        btnCheckout = findViewById(R.id.btn_checkout);    // Pastikan ID ini ada di XML
+        btnCart = findViewById(R.id.btn_cart);    // Pastikan ID ini ada di XML
 
 //        Tombol back
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
         // Tangkap Data dari Intent (TokoAdapter)
-        idToko = getIntent().getIntExtra("ID_TOKO", 0);
-        namaToko = getIntent().getStringExtra("NAMA_TOKO");
+        shopId = getIntent().getIntExtra("ID_TOKO", 0);
+        shopName = getIntent().getStringExtra("NAMA_TOKO");
 
         // Set nama toko di header
-        if (namaToko != null) {
-            tvNamaTokoHeader.setText(namaToko);
+        if (shopName != null) {
+            tvNamaTokoHeader.setText(shopName);
         }
+
+//        Update diawal reload
+        updateBottomBar();
 
         // Siapkan Data Menu (Filter berdasarkan idToko)
         listDataMenu = new ArrayList<>();
+
+//        Siapkan data navbar bottom
         populateMenuData();
 
         // Set Adapter
@@ -70,38 +76,63 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         adapter = new MenuAdapter(this, listDataMenu, this);
         rvMenu.setAdapter(adapter);
 
-        // 5. Logika Tombol Checkout
-        btnCheckout.setOnClickListener(v -> {
-            ArrayList<Menu> keranjang = new ArrayList<>();
-            for (Menu m : listDataMenu) {
-                if (m.getQty() > 0) {
-                    keranjang.add(m);
-                }
-            }
-
-            if (keranjang.isEmpty()) {
-                Toast.makeText(this, "Silakan pilih menu terlebih dahulu", Toast.LENGTH_SHORT).show();
+        // Logika Tombol Cart
+        btnCart.setOnClickListener(v -> {
+            if (CartManager.getInstance().getCartList().isEmpty()) {
+                Toast.makeText(this, "Keranjang masih kosong!", Toast.LENGTH_SHORT).show();
             } else {
-//                // Berpindah ke CheckoutActivity (bawa list objek Menu)
-//                Intent intent = new Intent(DetailTokoActivity.this, CheckoutActivity.class);
-//                intent.putExtra("LIST_PESANAN", keranjang);
-//                startActivity(intent);
+                // Untuk sementara kita biarkan begini sampai Anda siap membuat CartActivity
+                Toast.makeText(this, "Menuju Halaman Keranjang...", Toast.LENGTH_SHORT).show();
+                // Intent intent = new Intent(this, CartActivity.class);
+                // startActivity(intent);
             }
         });
     }
 
     private void populateMenuData() {
-        if (idToko == 1) { // Warung Mang Ade
-            // Langsung masukkan idToko (int) ke parameter kedua
-            listDataMenu.add(new Menu(101, idToko, namaToko, "Nasi Goreng Ade", 15000, R.drawable.ic_user_avatar));
-            listDataMenu.add(new Menu(102, idToko, namaToko, "Es Teh Manis", 5000, R.drawable.ic_user_avatar));
-        } else if (idToko == 2) {
-            listDataMenu.add(new Menu(201, idToko, namaToko, "Mie Ayam Bakso", 12000, R.drawable.ic_user_avatar));
+        List<Menu> tempMenu = new ArrayList<>();
+
+        if (shopId == 1) {
+            tempMenu.add(new Menu(101, shopId, shopName, "Nasi Goreng Ade", 15000, R.drawable.ic_user_avatar));
+            tempMenu.add(new Menu(102, shopId, shopName, "Es Teh Manis", 5000, R.drawable.ic_user_avatar));
+        } else if (shopId == 2) {
+            tempMenu.add(new Menu(201, shopId, shopName, "Mie Ayam Bakso", 12000, R.drawable.ic_user_avatar));
+        }
+
+        // Sinkronisasi data lokal dengan CartManager agar Qty tidak reset ke 0
+        for (Menu m : tempMenu) {
+            for (Menu cartItem : CartManager.getInstance().getCartList()) {
+                if (m.getProductId() == cartItem.getProductId()) {
+                    m.setQty(cartItem.getQty());
+                    m.setNote(cartItem.getNote());
+                }
+            }
+        }
+
+        listDataMenu.clear();
+        listDataMenu.addAll(tempMenu);
+    }
+    // Fungsi pembantu untuk update tampilan jumlah produk di bar bawah
+    private void updateBottomBar() {
+        int totalQty = 0;
+        for (Menu item : CartManager.getInstance().getCartList()) {
+            totalQty += item.getQty();
+        }
+
+        // Tampilkan: "X Produk"
+        tvTotalProduct.setText(totalQty + " Produk");
+
+        // Opsional: Sembunyikan bar jika keranjang kosong
+        if (totalQty == 0) {
+            findViewById(R.id.layout_checkout_bar).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.layout_checkout_bar).setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void onTotalChanged(int newTotal) {
-        tvTotalPrice.setText("Rp " + String.format("%,d", newTotal).replace(',', '.'));
+        // Ketika ada perubahan +/- di adapter, panggil update bar bawah
+        updateBottomBar();
     }
 }

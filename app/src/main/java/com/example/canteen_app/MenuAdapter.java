@@ -19,7 +19,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     private Context context;
     private List<Menu> menuList;
     private CardListener listener; // Interface yang kamu buat tadi
-    private int totalHarga = 0;
 
     public MenuAdapter(Context context, List<Menu> menuList, CardListener listener) {
         this.context = context;
@@ -67,19 +66,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             menu.setQty(menu.getQty() + 1);
             holder.tvQty.setText(String.valueOf(menu.getQty()));
 
-            totalHarga += menu.getProductPrice();
-            listener.onTotalChanged(totalHarga);
+//            Update instance
+            CartManager.getInstance().addOrUpdateItem(menu);
+            listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
         });
 
         // Tombol KURANG (-)
         holder.btnMinus.setOnClickListener(v -> {
             if (menu.getQty() > 0) {
-                // 4. PERBAIKAN: Kurangi qty di dalam objek Menu
                 menu.setQty(menu.getQty() - 1);
                 holder.tvQty.setText(String.valueOf(menu.getQty()));
 
-                totalHarga -= menu.getProductPrice();
-                listener.onTotalChanged(totalHarga);
+                CartManager.getInstance().addOrUpdateItem(menu);
+                listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
 
                 if (menu.getQty() == 0) {
                     holder.btnMinus.setVisibility(View.GONE);
@@ -93,16 +92,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 private void showNoteDialog(Menu menu) {
     AlertDialog.Builder builder = new AlertDialog.Builder(context);
     builder.setTitle("Catatan untuk " + menu.getProductName());
-
     final EditText input = new EditText(context);
     input.setHint("Contoh: Tidak pakai sambal...");
     input.setText(menu.getNote()); // Tampilkan catatan lama jika ada
-
     builder.setView(input);
-    builder.setPositiveButton("Simpan", (dialog, which) -> {
-        // SIMPAN CATATAN KE OBJEK MENU
-        menu.setNote(input.getText().toString());
-    });
+    builder.setPositiveButton("Simpan", (dialog, which) -> menu.setNote(input.getText().toString()));
     builder.setNegativeButton("Batal", (dialog, which) -> dialog.dismiss());
     builder.show();
 }

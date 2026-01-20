@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Canteen_app">
         <activity
+            android:name=".DetailTokoActivity"
+            android:exported="false" />
+        <activity
             android:name=".pembayaranselesai"
             android:exported="false" />
         <activity
@@ -22,18 +25,38 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".Register"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BerandaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".KeranjangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TentangAplikasiActivity"
             android:exported="false" />
     </application>
 

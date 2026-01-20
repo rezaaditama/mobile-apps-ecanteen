@@ -90,10 +90,10 @@ public class BerandaActivity extends AppCompatActivity {
         });
 
         navProfile.setOnClickListener(v -> {
-            // Un-comment baris di bawah jika ProfileActivity sudah dibuat
-            // Intent intent = new Intent(BerandaActivity.this, ProfileActivity.class);
-            // startActivity(intent);
-            // overridePendingTransition(0, 0);
+//             Un-comment baris di bawah jika ProfileActivity sudah dibuat
+             Intent intent = new Intent(BerandaActivity.this, ProfilActivity.class);
+             startActivity(intent);
+             overridePendingTransition(0, 0);
         });
     }
 

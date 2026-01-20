@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 //        Redirect login ke beranda
         btnMasuk.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, BerandaActivity.class));
+            finish();
         });
     }
 }

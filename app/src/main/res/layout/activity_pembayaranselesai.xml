@@ -20,149 +20,76 @@
         android:src="@drawable/ceklis"
         android:layout_marginBottom="16dp"/>
 
-    <!-- JUDUL -->
+    <!-- Header -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PEMBAYARAN SELESAI"
-        android:textColor="@color/ijo"
+        android:textColor="@color/secondary"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_bold"
         android:layout_marginBottom="24dp"/>
 
-    <!-- FRAME HIJAU -->
+    <!-- Bill -->
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/lihatpesanan"
-        android:padding="12dp">
-
-        <!-- GARIS PUTUS PUTUS -->
+        android:padding="12dp"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_qr_scan"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Metode Pembayaran" android:textColor="@color/white" android:fontFamily="@font/poppins_regular"/>
+                <TextView android:id="@+id/tvSelesaiMetode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/white" android:textStyle="bold" android:fontFamily="@font/poppins_bold"/>
+            </LinearLayout>
 
-            <!-- ISI -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Total Pembayaran" android:textColor="@color/white" android:fontFamily="@font/poppins_regular"/>
+                <TextView android:id="@+id/tvSelesaiTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rp 0" android:textColor="@color/white" android:textStyle="bold" android:fontFamily="@font/poppins_bold"/>
+            </LinearLayout>
 
-                <!-- METODE -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Waktu Pengambilan" android:textColor="@color/white" android:fontFamily="@font/poppins_regular"/>
+                <TextView android:id="@+id/tvSelesaiWaktu" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" android:textColor="@color/white" android:fontFamily="@font/poppins_regular"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Metode Pembayaran"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="QRIS"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <!-- TOTAL -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Total Pembayaran"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rp 15.000"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <!-- WAKTU -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Waktu"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="17-01-2026 12:30"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
-
-                <!-- ID PESANAN -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ID Pesanan"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#2501AX2BZY41"
-                        android:textColor="@color/white"/>
-                </LinearLayout>
-
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="ID Pesanan" android:textColor="@color/white" android:fontFamily="@font/poppins_regular"/>
+                <TextView android:id="@+id/tvSelesaiId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="#-" android:textColor="@color/white" android:fontFamily="@font/poppins_bold"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <!-- BUTTON -->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLihatPesananSelesai"
         android:layout_width="300dp"
         android:layout_height="55dp"
         android:text="LIHAT PESANAN"
         android:textColor="@color/white"
         android:background="@drawable/lihatpesanan"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/poppins_bold"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnKembaliBeranda"
         android:layout_width="300dp"
         android:layout_height="55dp"
         android:text="KEMBALI KE BERANDA"
-        android:textColor="@color/ijo"
+        android:textColor="@color/secondary"
         android:background="@drawable/pesanan"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_bold"/>
 
     <!-- SPACER BAWAH -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
 </LinearLayout>

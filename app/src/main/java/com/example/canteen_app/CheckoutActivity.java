@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -102,18 +103,10 @@ private void initView() {
     }
 
     private void processOrder(String jam) {
-        // Ambil data final
-        List<Menu> finalItems = new ArrayList<>(CartManager.getInstance().getCartList());
-        int total = CartManager.getInstance().getGlobalTotal();
-        String orderId = "ORD-" + System.currentTimeMillis(); // ID Unik sederhana
-
-        // Bungkus ke model Order
-        Order orderBaru = new Order(orderId, finalItems, jam, total);
-        Toast.makeText(this, "Pesanan " + orderId + " berhasil dibuat!", Toast.LENGTH_LONG).show();
-
-        // Bersihkan keranjang karena sudah dipesan
-        CartManager.getInstance().clearCart();
-        finish();
+        // Pindah ke halaman metode pembayaran
+        Intent intent = new Intent(CheckoutActivity.this, metodepembayaran.class);
+        intent.putExtra("PICKUP_TIME", jam);
+        startActivity(intent);
     }
 
 }

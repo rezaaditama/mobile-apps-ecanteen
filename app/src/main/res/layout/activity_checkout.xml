@@ -158,7 +158,7 @@
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/secondary"
             android:fontFamily="@font/poppins_bold"
-            android:text="Konfirmasi Pesanan"
+            android:text="Pesan Sekarang"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>

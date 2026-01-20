@@ -10,13 +10,15 @@ public class Order implements Serializable{
     private String pickupTime;
     private int totalHarga;
     private boolean isFinished;
+    private String paymentMethod;
 
-    public Order(String orderId, List<Menu> items, String pickupTime, int totalHarga) {
+    public Order(String orderId, List<Menu> items, String pickupTime, int totalHarga, String paymentMethod) {
         this.orderId = orderId;
         this.items = items;
         this.pickupTime = pickupTime;
         this.totalHarga = totalHarga;
         this.isFinished = false;
+        this.paymentMethod = paymentMethod;
     }
 
     // Gette
@@ -25,6 +27,7 @@ public class Order implements Serializable{
     public String getPickupTime() { return pickupTime; }
     public int getTotalHarga() { return totalHarga; }
     public boolean isFinished() { return isFinished; }
+    public String getPaymentMethod() { return paymentMethod; }
 
 //    Setter
     public void setFinished(boolean finished) { isFinished = finished; }

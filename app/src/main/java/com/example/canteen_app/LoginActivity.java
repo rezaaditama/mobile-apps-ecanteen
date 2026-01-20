@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnPembeli, btnPenjual;
+    private Button btnPembeli, btnPenjual, btnmasuk;
     private TextView tvDaftar;
 
     @Override
@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         // INIT VIEW
         btnPembeli = findViewById(R.id.btn_pembeli);
         btnPenjual = findViewById(R.id.btn_penjual);
+        btnmasuk   = findViewById(R.id.btn_masuk);
         tvDaftar   = findViewById(R.id.tv_daftar);
 
         // underline "Daftar"
@@ -42,6 +43,12 @@ public class LoginActivity extends AppCompatActivity {
         btnPenjual.setOnClickListener(v -> {
             btnPenjual.setSelected(true);
             btnPembeli.setSelected(false);
+        });
+
+        // Klik Masuk → Metode Pembayaran
+        btnmasuk.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, metodepembayaran.class);
+            startActivity(intent);
         });
 
         // Klik Daftar → Register

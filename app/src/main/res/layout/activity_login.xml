@@ -123,6 +123,7 @@
             android:textColor="#666666" />
 
         <Button
+            android:id="@+id/btn_masuk"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="Masuk"

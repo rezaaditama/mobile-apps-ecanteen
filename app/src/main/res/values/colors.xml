@@ -35,4 +35,6 @@
 
     <!--    Beranda Color-->
     <color name="profile_circle">#E93E3E</color>
+    <color name="ijo">#468f41</color>
+    <color name="oren">#F5EBDF</color>
 </resources>

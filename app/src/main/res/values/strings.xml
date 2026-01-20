@@ -69,4 +69,6 @@
     <string name="logout_desc">Kamu yakin ingin logout?</string>
     <string name="logout">Keluar</string>
     <string name="lg_cancel">Batal</string>
+
+
 </resources>

@@ -12,6 +12,8 @@ public class Menu implements Serializable{
     private int shop_id;
     private String shop_name;
     private boolean isFinished = false;
+    private String parentOrderId;
+    private String parentPickupTime;
 
 
 
@@ -34,9 +36,15 @@ public class Menu implements Serializable{
     public int getProductId() { return product_id; }
     public int getShopId() { return shop_id; }
     public String getShopName() { return shop_name; }
+    public String getParentOrderId() { return parentOrderId; }
+    public String getParentPickupTime() { return parentPickupTime; }
 
 //    Setter
     public void setQty(int qty) { this.qty = qty; }
     public void setNote(String note) { this.note = note; }
     public void setFinished(boolean finished) { isFinished = finished; }
+    public void setParentOrderId(String id) { this.parentOrderId = id; }
+    public void setParentPickupTime(String time) { this.parentPickupTime = time; }
+
+
 }

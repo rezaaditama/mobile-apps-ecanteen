@@ -45,8 +45,8 @@ public class pembayaranselesai extends AppCompatActivity {
 
 //        Tombol Lihat Pesanan
         btnLihat.setOnClickListener(v -> {
-            Toast.makeText(this, "Fitur Riwayat Pesanan akan segera hadir!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(this, HistoryActivity.class));
+            Toast.makeText(this, "Terima Kasih Telah Memesan", Toast.LENGTH_SHORT).show();
+             startActivity(new Intent(this, PesananAktifActivity.class));
             finish();
         });
     }

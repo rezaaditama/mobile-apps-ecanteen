@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/krem"
+    android:background="@color/white"
     android:padding="20dp"
     tools:context=".BerandaActivity">
 
@@ -66,13 +66,11 @@
         android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_profile">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="30dp">
-
     <TextView
         android:id="@+id/tv_greeting_1"
         android:layout_width="wrap_content"
@@ -83,7 +81,6 @@
         android:textColor="@color/primary"
         android:textSize="32sp"
         android:textStyle="bold" />
-
     <TextView
         android:id="@+id/tv_greeting_2"
         android:layout_width="wrap_content"
@@ -104,13 +101,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="15dp">
-
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@android:drawable/ic_menu_search"
             app:tint="@color/primary"/>
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
@@ -122,61 +117,7 @@
             android:textSize="14sp"
             android:inputType="text"
             android:imeOptions="actionSearch"/>
-
     </LinearLayout>
-
-<!--    <HorizontalScrollView-->
-<!--        android:id="@+id/hsv_categories"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:scrollbars="none"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/search_layout">-->
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:paddingHorizontal="10dp">-->
-<!--            <Button-->
-<!--                android:id="@+id/btn_semua"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                android:background="@drawable/btn_toogle_active"-->
-<!--                android:text="semua"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:minWidth="0dp"-->
-<!--                android:minHeight="0dp"-->
-<!--                android:padding="8dp" />-->
-<!--            <Button-->
-<!--                android:id="@+id/btn_makanan"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                android:background="@drawable/btn_toogle_inactive"-->
-<!--                android:text="makanan"-->
-<!--                android:textColor="@color/primary"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:minWidth="0dp"-->
-<!--                android:minHeight="0dp"-->
-<!--                android:padding="8dp" />-->
-<!--            <Button-->
-<!--                android:id="@+id/btn_minuman"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="4dp"-->
-<!--                android:background="@drawable/btn_toogle_inactive"-->
-<!--                android:text="minuman"-->
-<!--                android:textColor="@color/primary"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:minWidth="0dp"-->
-<!--                android:minHeight="0dp"-->
-<!--                android:padding="8dp" />-->
-<!--        </LinearLayout>-->
-<!--    </HorizontalScrollView>-->
 
     <RelativeLayout
         android:id="@+id/layout_rekomendasi"

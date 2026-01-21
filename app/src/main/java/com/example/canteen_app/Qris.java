@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Qris extends AppCompatActivity {
 
     @Override
@@ -20,9 +23,16 @@ public class Qris extends AppCompatActivity {
             int total = CartManager.getInstance().getGlobalTotal();
             String idOrder = "ORD-" + System.currentTimeMillis();
 
+//            Copy pesanan
+            List<Menu> keranjangSekarang = CartManager.getInstance().getCartList();
+            List<Menu> copyUntukHistory = new ArrayList<>(keranjangSekarang);
+
 //            Simpan data
-            Order orderBaru = new Order(idOrder, CartManager.getInstance().getCartList(), jam, total, metode);
+            Order orderBaru = new Order(idOrder, copyUntukHistory, jam, total, metode);
             CartManager.getInstance().addOrderToHistory(orderBaru);
+
+//            Bersihkan keranjang
+            CartManager.getInstance().clearCart();
 
 //          Pindah dengan membawa data
             Intent intent = new Intent(Qris.this, pembayaranselesai.class);
@@ -34,8 +44,6 @@ public class Qris extends AppCompatActivity {
 //            Pindah halaman
             startActivity(intent);
 
-//            Bersihkan keranjang
-            CartManager.getInstance().clearCart();
             finish();
         }, 3000);
     }

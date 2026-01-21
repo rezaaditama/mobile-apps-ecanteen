@@ -17,8 +17,12 @@ public class Order implements Serializable{
         this.items = items;
         this.pickupTime = pickupTime;
         this.totalHarga = totalHarga;
-        this.isFinished = false;
         this.paymentMethod = paymentMethod;
+
+        for (Menu m : items) {
+            m.setParentOrderId(orderId);
+            m.setParentPickupTime(pickupTime);
+        }
     }
 
     // Gette

@@ -1,45 +1,91 @@
 package com.example.canteen_app;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PesananAktifActivity extends AppCompatActivity {
-    private LinearLayout tabPesananSelesai;
-
-    private Button btnQris, btnCod;
+//    Mendeklarasikan variabel
+    private RecyclerView rvPesanan;
+    private View indicatorAktif, indicatorSelesai;
+    private TextView tvAktif, tvSelesai, tvEmpty;
+    private PesananAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_pesanan_aktif);
 
-        tabPesananSelesai  = findViewById(R.id.tabSelesai);
-        btnQris            = findViewById(R.id.btn_pesanan_qris);
-        btnCod             = findViewById(R.id.btn_pesanan_cod);
+//        Tangkap komponen berdasarkan ID
+        rvPesanan = findViewById(R.id.rvPesanan);
+        indicatorAktif = findViewById(R.id.indicatorAktif);
+        indicatorSelesai = findViewById(R.id.indicatorSelesai);
+        tvAktif = findViewById(R.id.tvAktif);
+        tvSelesai = findViewById(R.id.tvSelesai);
+        tvEmpty = findViewById(R.id.tvEmptyState);
 
-        tabPesananSelesai.setOnClickListener(v -> {
-            Intent intent = new Intent(PesananAktifActivity.this, PesananSelesaiActivity.class);
-            startActivity(intent);
-        });
+        rvPesanan.setLayoutManager(new LinearLayoutManager(this));
 
-        btnQris.setOnClickListener(v -> {
-            Intent intent = new Intent(PesananAktifActivity.this, StatusQrisActivity.class);
-            startActivity(intent);
-        });
+        // Tombol Kembali
+        findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> finish());
 
-        btnCod.setOnClickListener(v -> {
-            Intent intent = new Intent(PesananAktifActivity.this, StatusCodActivity.class);
-            startActivity(intent);
-        });
+        // Default: Tampilkan tab Aktif
+        showTabContent(false); // false berarti isFinished = false (Aktif)
+
+        // Listener Tab
+        findViewById(R.id.tabAktif).setOnClickListener(v -> showTabContent(false));
+        findViewById(R.id.tabSelesai).setOnClickListener(v -> showTabContent(true));
+    }
+
+    private void showTabContent(boolean isSelesai) {
+        if (!isSelesai) {
+//            UI kalau aktif
+            indicatorAktif.setVisibility(View.VISIBLE);
+            indicatorSelesai.setVisibility(View.INVISIBLE);
+            tvAktif.setTextColor(getResources().getColor(R.color.primary));
+            tvSelesai.setTextColor(Color.GRAY);
+        } else {
+//            UI kalau selesai
+            indicatorAktif.setVisibility(View.INVISIBLE);
+            indicatorSelesai.setVisibility(View.VISIBLE);
+            tvSelesai.setTextColor(getResources().getColor(R.color.primary));
+            tvAktif.setTextColor(Color.GRAY);
+        }
+
+        // Filter Data per Menu
+        filterDataPerMenu(isSelesai);
+    }
+
+//    Filter status pemesanan
+    private void filterDataPerMenu(boolean statusCari) {
+        List<Menu> listTampil = new ArrayList<>();
+
+        // Ambil riwayat order dari CartManager
+        List<Order> history = CartManager.getInstance().getHistoryList();
+
+        if (history != null) {
+            for (Order order : history) {
+                for (Menu item : order.getItems()) {
+                    if (item.isFinished() == statusCari) {
+                        listTampil.add(item);
+                    }
+                }
+            }
+        }
+
+//        Update adapter
+        adapter = new PesananAdapter(this, listTampil);
+        rvPesanan.setAdapter(adapter);
+
+        // Munculkan pesan jika kosong
+        tvEmpty.setVisibility(listTampil.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

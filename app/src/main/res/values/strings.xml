@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Canteen_app</string>
+    <string name="app_name">KeKantin</string>
     <!-- Konten form Regist -->
     <string name="lg_title2">Registrasi</string>
     <string name="lg_email2">Email</string>
@@ -54,7 +54,7 @@
 
     <!-- Tentang Aplikasi -->
     <string name="about_app">Tentang Aplikasi</string>
-    <string name="app_name_custom">Ke Kantin App</string>
+    <string name="app_name_custom">ke.kantin.</string>
     <string name="app_version">Versi 1.0.0</string>
     <string name="short_description">Deskripsi Singkat</string>
     <string name="app_description">

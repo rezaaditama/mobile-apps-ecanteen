@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -71,14 +70,12 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
             }
         }
 
-        // Kirim ID Order ke halaman status/invoice
-            holder.itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, pembayaranselesai.class);
-                intent.putExtra("ID", menu.getParentOrderId());
-                intent.putExtra("METODE", menu.getPaymentMethod());
-                intent.putExtra("TOTAL", totalHargaItem);
-                intent.putExtra("JAM", menu.getParentPickupTime());
-                context.startActivity(intent);
+//        untuk pindah ke halaman detail product
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, StatusQrisActivity.class);
+            // Mengirim seluruh objek menu (Serializable)
+            intent.putExtra("ITEM_PESANAN", menu);
+            context.startActivity(intent);
         });
     }
 

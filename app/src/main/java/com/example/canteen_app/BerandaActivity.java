@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BerandaActivity extends AppCompatActivity {
-
-//    private Button btnSemua, btnMakanan, btnMinuman;
     private RecyclerView rvToko;
     private TokoAdapter adapter;
     private List<Toko> listToko;
@@ -38,18 +36,9 @@ public class BerandaActivity extends AppCompatActivity {
             return insets;
         });
 
-//        Inisialisasi Komponen
-//    btnSemua = findViewById(R.id.btn_semua);
-//    btnMakanan = findViewById(R.id.btn_makanan);
-//    btnMinuman = findViewById(R.id.btn_minuman);
     rvToko = findViewById(R.id.rv_daftar_toko);
     navOrders = findViewById(R.id.menu_history);
     navProfile = findViewById(R.id.menu_profile);
-
-//    Click Listener
-//        btnSemua.setOnClickListener(v -> setTombolAktif(btnSemua, btnMakanan, btnMinuman));
-//        btnMakanan.setOnClickListener(v -> setTombolAktif(btnMakanan, btnSemua, btnMinuman));
-//        btnMinuman.setOnClickListener(v -> setTombolAktif(btnMinuman, btnSemua, btnMakanan));
 
 //        Panggil navigasi
         setupNavigation();

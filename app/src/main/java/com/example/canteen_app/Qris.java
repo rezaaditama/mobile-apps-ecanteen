@@ -23,8 +23,17 @@ public class Qris extends AppCompatActivity {
             int total = CartManager.getInstance().getGlobalTotal();
             String idOrder = "ORD-" + System.currentTimeMillis();
 
-//            Copy pesanan
+//          Ambil menu dari keranjang
             List<Menu> keranjangSekarang = CartManager.getInstance().getCartList();
+
+//            Pecah jadi per item
+            for (Menu m : keranjangSekarang) {
+                m.setParentOrderId(idOrder);
+                m.setPaymentMethod(metode);
+                m.setParentPickupTime(jam);
+            }
+
+//          copy data
             List<Menu> copyUntukHistory = new ArrayList<>(keranjangSekarang);
 
 //            Simpan data

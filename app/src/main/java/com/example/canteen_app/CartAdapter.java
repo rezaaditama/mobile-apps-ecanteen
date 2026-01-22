@@ -55,29 +55,45 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         // Tombol Plus
         holder.btnPlus.setOnClickListener(v -> {
-            item.setQty(item.getQty() + 1);
-            CartManager.getInstance().addOrUpdateItem(item); // Update di Singleton
-            notifyItemChanged(position);
-            listener.onTotalChanged(0);
+            int currentPos = holder.getBindingAdapterPosition();
+            if (currentPos != RecyclerView.NO_POSITION && currentPos < listData.size()) {
+                Menu currentItem = listData.get(currentPos);
+                currentItem.setQty(currentItem.getQty() + 1);
+                CartManager.getInstance().addOrUpdateItem(currentItem);
+                notifyItemChanged(currentPos);
+                listener.onTotalChanged(0);
+            }
         });
 
         // Tombol Minus (Logika hapus otomatis jika 0)
         holder.btnMinus.setOnClickListener(v -> {
-            int newQty = item.getQty() - 1;
-            item.setQty(newQty);
+            int currentPos = holder.getBindingAdapterPosition();
 
-            CartManager.getInstance().addOrUpdateItem(item); // Ini otomatis hapus di Singleton jika qty <= 0
+            if (currentPos == RecyclerView.NO_POSITION || currentPos >= listData.size()) return;
+                Menu currentItem = listData.get(currentPos);
+                int newQty = currentItem.getQty() - 1;
 
-            if (newQty <= 0) {
-                listData.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, listData.size());
-            } else {
-                notifyItemChanged(position);
-            }
-            listener.onTotalChanged(0);
+                if (newQty <= 0) {
+                    // hapus data di Manager
+                    CartManager.getInstance().removeItem(currentItem.getProductId());
+
+                    if (listData.isEmpty()) {
+                        notifyDataSetChanged();
+                    } else {
+                        notifyItemRemoved(currentPos);
+                        notifyItemRangeChanged(currentPos, listData.size());
+                    }
+                } else {
+//                    Kalau qty > 0
+                    currentItem.setQty(newQty);
+                    CartManager.getInstance().addOrUpdateItem(currentItem);
+                    notifyItemChanged(currentPos);
+                }
+                    if (listener != null) {
+                        listener.onTotalChanged(0);
+                    }
         });
-}
+    }
 
 //Ambil jumlah item
     @Override

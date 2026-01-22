@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -36,6 +38,9 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
         holder.imgMenu.setImageResource(menu.getProductPath());
         holder.tvNamaToko.setText(menu.getShopName());
         holder.tvNamaMenu.setText(menu.getProductName() + " (x" + menu.getQty() + ")");
+
+//        Format harga
+        int totalHargaItem = menu.getProductPrice() * menu.getQty();
         holder.tvHarga.setText("Rp " + String.format("%,d", menu.getProductPrice() * menu.getQty()).replace(',', '.'));
 
         // Tampilkan catatan
@@ -55,15 +60,32 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
             holder.tvStatus.setText("Sudah Diambil");
             holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
         } else {
-            holder.tvStatus.setText("Siap Diambil");
-            holder.tvStatus.setTextColor(context.getResources().getColor(R.color.gray));
+//            Kalau pembayaran tunai
+            if ("Tunai".equalsIgnoreCase(menu.getPaymentMethod())) {
+                holder.tvStatus.setText("Belum Bayar (Bayar di Kasir)");
+                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            } else {
+                // Jika QRIS, otomatis sudah bayar tinggal ambil
+                holder.tvStatus.setText("Siap Diambil");
+                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
+            }
         }
+
+        // Kirim ID Order ke halaman status/invoice
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, pembayaranselesai.class);
+                intent.putExtra("ID", menu.getParentOrderId());
+                intent.putExtra("METODE", menu.getPaymentMethod());
+                intent.putExtra("TOTAL", totalHargaItem);
+                intent.putExtra("JAM", menu.getParentPickupTime());
+                context.startActivity(intent);
+        });
     }
 
 //    Mengambil total item
     @Override
     public int getItemCount() {
-        return listMenu.size();
+        return (listMenu != null) ? listMenu.size() : 0;
     }
 
 //    Data recycle

@@ -89,6 +89,13 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateMenuData();
+        updateBottomBar();
+    }
+
     private void populateMenuData() {
         List<Menu> tempMenu = new ArrayList<>();
 
@@ -99,18 +106,31 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
             tempMenu.add(new Menu(201, shopId, shopName, "Mie Ayam Bakso", 12000, R.drawable.ic_user_avatar));
         }
 
+        listDataMenu.clear();
+        List<Menu> currentCart = CartManager.getInstance().getCartList();
+
         // Sinkronisasi data lokal dengan CartManager agar Qty tidak reset ke 0
-        for (Menu m : tempMenu) {
-            for (Menu cartItem : CartManager.getInstance().getCartList()) {
-                if (m.getProductId() == cartItem.getProductId()) {
-                    m.setQty(cartItem.getQty());
-                    m.setNote(cartItem.getNote());
+        for (Menu mRaw : tempMenu) {
+            Menu foundInCart = null;
+            for (Menu mCart : currentCart) {
+                if (mRaw.getProductId() == mCart.getProductId()) {
+                    foundInCart = mCart;
+                    break;
                 }
+            }
+
+            if (foundInCart != null) {
+//                Pakai objek yang ada di CartManager
+                listDataMenu.add(foundInCart);
+            } else {
+//                Pakai objek yang ada di Menu
+                listDataMenu.add(mRaw);
             }
         }
 
-        listDataMenu.clear();
-        listDataMenu.addAll(tempMenu);
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
     // Fungsi pembantu untuk update tampilan jumlah produk di bar bawah
     private void updateBottomBar() {
@@ -136,3 +156,4 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         updateBottomBar();
     }
 }
+

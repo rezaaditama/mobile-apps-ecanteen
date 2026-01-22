@@ -20,7 +20,7 @@ public class KeranjangActivity extends AppCompatActivity {
 //    Deklarasi Variabel
 private RecyclerView rvKeranjang;
     private TextView tvHargaTotal, tvEmptyCart;
-    private MenuAdapter adapter;
+    private CartAdapter adapter;
     private List<Menu> listKeranjang;
 
 
@@ -68,13 +68,15 @@ private RecyclerView rvKeranjang;
             rvKeranjang.setLayoutManager(new LinearLayoutManager(this));
 
             // Kita gunakan interface listener agar Activity tahu saat Qty berubah
-            adapter = new MenuAdapter(this, listKeranjang, new CardListener() {
+            adapter = new CartAdapter(this, listKeranjang, new CardListener() {
 
 //                Buat update total harga
                 @Override
                 public void onTotalChanged(int newTotal) {
                     updateTotalHarga();
-                    checkIfEmpty();
+                    if (listKeranjang == null || listKeranjang.isEmpty()) {
+                        showEmptyState(true);
+                    }
                 }
             });
             rvKeranjang.setAdapter(adapter);
@@ -85,8 +87,10 @@ private RecyclerView rvKeranjang;
 //    Update total harga
 private void updateTotalHarga() {
     int total = 0;
-    for (Menu m : listKeranjang) {
-        total += (m.getProductPrice() * m.getQty());
+    if (listKeranjang != null) {
+        for (Menu m : listKeranjang) {
+            total += (m.getProductPrice() * m.getQty());
+        }
     }
     tvHargaTotal.setText("Rp " + String.format("%,d", total));
 }

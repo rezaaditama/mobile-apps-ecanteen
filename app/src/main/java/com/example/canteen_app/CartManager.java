@@ -8,7 +8,6 @@ public class CartManager {
 //    Inisialisasi singleton
     private static CartManager instance;
     private List<Menu> cartList = new ArrayList<>();
-
     private CartManager() {}
     private List<Order> historyList = new ArrayList<>();
 
@@ -30,6 +29,8 @@ public class CartManager {
 
 //    Menambahkan barang
     public void addOrUpdateItem(Menu menu) {
+        if (menu == null) return;
+
         for (int i = 0; i < cartList.size(); i++) {
             if (cartList.get(i).getProductId() == menu.getProductId()) {
                 if (menu.getQty() <= 0) {
@@ -42,6 +43,15 @@ public class CartManager {
         }
         if (menu.getQty() > 0) cartList.add(menu);
     }
+
+public void removeItem(int productId) {
+    for (int i = 0; i < cartList.size(); i++) {
+        if (cartList.get(i).getProductId() == productId) {
+            cartList.remove(i);
+            break;
+        }
+    }
+}
 
 //    Hapus Ketika berhasil checkout
 public void clearCart() {

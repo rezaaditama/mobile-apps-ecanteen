@@ -41,8 +41,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         holder.tvNama.setText(menu.getProductName());
         holder.tvHarga.setText("Rp " + String.format("%,d", menu.getProductPrice()).replace(',', '.'));
         holder.imgMenu.setImageResource(menu.getProductPath());
-
-//        Set Qty
         holder.tvQty.setText(String.valueOf(menu.getQty()));
 
 //        Tampilan awal qty
@@ -56,33 +54,31 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         // Tombol TAMBAH (+)
         holder.btnPlus.setOnClickListener(v -> {
-            if (menu.getQty() == 0) {
-                showNoteDialog(menu); // Kirim objek menu agar catatan tersimpan
-                holder.btnMinus.setVisibility(View.VISIBLE);
-                holder.tvQty.setVisibility(View.VISIBLE);
-            }
-
-            // update qty
-            menu.setQty(menu.getQty() + 1);
-            holder.tvQty.setText(String.valueOf(menu.getQty()));
-
-//            Update instance
-            CartManager.getInstance().addOrUpdateItem(menu);
-            listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
+            int currentPos = holder.getBindingAdapterPosition();
+                    if (currentPos != RecyclerView.NO_POSITION) {
+                        Menu item = menuList.get(currentPos);
+                        if (item.getQty() == 0) {
+                            showNoteDialog(item);
+                        }
+                        item.setQty(item.getQty() + 1);
+                        CartManager.getInstance().addOrUpdateItem(item);
+                        notifyItemChanged(currentPos);
+                        listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
+                    }
         });
 
         // Tombol KURANG (-)
         holder.btnMinus.setOnClickListener(v -> {
-            if (menu.getQty() > 0) {
-                menu.setQty(menu.getQty() - 1);
-                holder.tvQty.setText(String.valueOf(menu.getQty()));
+            int currentPos = holder.getBindingAdapterPosition();
+            if (currentPos != RecyclerView.NO_POSITION) {
+                Menu item = menuList.get(currentPos);
+                if (item.getQty() > 0) {
+                    item.setQty(item.getQty() - 1);
+                    CartManager.getInstance().addOrUpdateItem(item);
 
-                CartManager.getInstance().addOrUpdateItem(menu);
-                listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
-
-                if (menu.getQty() == 0) {
-                    holder.btnMinus.setVisibility(View.GONE);
-                    holder.tvQty.setVisibility(View.GONE);
+                    // Refresh item agar UI update
+                    notifyItemChanged(currentPos);
+                    listener.onTotalChanged(CartManager.getInstance().getGlobalTotal());
                 }
             }
         });

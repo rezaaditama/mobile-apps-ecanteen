@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PesananAktifActivity extends AppCompatActivity {
-//    Mendeklarasikan variabel
+    //    Mendeklarasikan variabel
     private RecyclerView rvPesanan;
     private View indicatorAktif, indicatorSelesai;
     private TextView tvAktif, tvSelesai, tvEmpty;
     private PesananAdapter adapter;
+    private boolean currentTabIsSelesai = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,13 @@ public class PesananAktifActivity extends AppCompatActivity {
         findViewById(R.id.tabSelesai).setOnClickListener(v -> showTabContent(true));
     }
 
+    //    Kalau dari halaman lain mau ke beranda
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showTabContent(currentTabIsSelesai);
+    }
+
     private void showTabContent(boolean isSelesai) {
         if (!isSelesai) {
 //            UI kalau aktif
@@ -64,7 +72,7 @@ public class PesananAktifActivity extends AppCompatActivity {
         filterDataPerMenu(isSelesai);
     }
 
-//    Filter status pemesanan
+    //    Filter status pemesanan
     private void filterDataPerMenu(boolean statusCari) {
         List<Menu> listTampil = new ArrayList<>();
 
@@ -86,6 +94,11 @@ public class PesananAktifActivity extends AppCompatActivity {
         rvPesanan.setAdapter(adapter);
 
         // Munculkan pesan jika kosong
-        tvEmpty.setVisibility(listTampil.isEmpty() ? View.VISIBLE : View.GONE);
+        if (listTampil.isEmpty()) {
+            tvEmpty.setVisibility(View.VISIBLE);
+            tvEmpty.setText(statusCari ? "Belum ada pesanan selesai" : "Tidak ada pesanan aktif");
+        } else {
+            tvEmpty.setVisibility(View.GONE);
+        }
     }
 }

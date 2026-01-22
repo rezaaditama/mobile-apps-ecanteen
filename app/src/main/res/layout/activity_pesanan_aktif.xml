@@ -41,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tvJudulPesanan">
+        app:layout_constraintTop_toBottomOf="@id/tvJudulPesanan"
+        android:background="@color/white">
 
         <!-- TAB PESANAN AKTIF -->
         <LinearLayout

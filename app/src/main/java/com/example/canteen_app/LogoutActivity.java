@@ -29,12 +29,14 @@ public class LogoutActivity extends AppCompatActivity {
 
         lgtBtnLogout.setOnClickListener(v -> {
             Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             startActivity(intent);
+            finish(); //
         });
 
         btnCancelLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(LogoutActivity.this, ProfilActivity.class);
-            startActivity(intent);
+            finish();
         });
         }
     }

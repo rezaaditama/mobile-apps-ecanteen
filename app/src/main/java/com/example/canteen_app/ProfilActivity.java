@@ -2,6 +2,7 @@ package com.example.canteen_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +15,8 @@ import com.google.android.material.button.MaterialButton;
 
 public class ProfilActivity extends AppCompatActivity {
     private LinearLayout menuEditProfil, btnLogout, menuTentangAplikasi;
+    private ImageView btnBack;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,15 @@ public class ProfilActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+//        Tombol back
+        ImageView btnBack = findViewById(R.id.btnBackProfil);
+        btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfilActivity.this, BerandaActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
         });
 
         menuEditProfil = findViewById(R.id.menu_edit_profile);

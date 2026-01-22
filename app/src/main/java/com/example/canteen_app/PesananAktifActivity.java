@@ -1,10 +1,12 @@
 package com.example.canteen_app;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +27,14 @@ public class PesananAktifActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesanan_aktif);
 
+//        Manipulasi tombol kembali
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                goToBeranda();
+            }
+        });
+
 //        Tangkap komponen berdasarkan ID
         rvPesanan = findViewById(R.id.rvPesanan);
         indicatorAktif = findViewById(R.id.indicatorAktif);
@@ -36,15 +46,28 @@ public class PesananAktifActivity extends AppCompatActivity {
         rvPesanan.setLayoutManager(new LinearLayoutManager(this));
 
         // Tombol Kembali
-        findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> finish());
+        findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> {
+            Intent intent = new Intent(PesananAktifActivity.this, BerandaActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish(); // Menutup halaman PesananAktif
+        });
 
-        // Default: Tampilkan tab Aktif
+        //Tampilkan tab Aktif
         showTabContent(false); // false berarti isFinished = false (Aktif)
 
         // Listener Tab
         findViewById(R.id.tabAktif).setOnClickListener(v -> showTabContent(false));
         findViewById(R.id.tabSelesai).setOnClickListener(v -> showTabContent(true));
     }
+
+//    Fungsi tombol kembali
+private void goToBeranda() {
+    Intent intent = new Intent(PesananAktifActivity.this, BerandaActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    startActivity(intent);
+    finish();
+}
 
     //    Kalau dari halaman lain mau ke beranda
     @Override

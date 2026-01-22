@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -20,10 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BerandaActivity extends AppCompatActivity {
+//    Deklarasi Variabel
     private RecyclerView rvToko;
     private TokoAdapter adapter;
     private List<Toko> listToko;
     private LinearLayout navOrders, navProfile;
+    private ImageView btnCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,11 @@ public class BerandaActivity extends AppCompatActivity {
             return insets;
         });
 
+//        Ambil komponen berdasarkan ID
     rvToko = findViewById(R.id.rv_daftar_toko);
     navOrders = findViewById(R.id.menu_history);
     navProfile = findViewById(R.id.menu_profile);
+    btnCart = findViewById(R.id.btn_cart);
 
 //        Panggil navigasi
         setupNavigation();
@@ -65,12 +70,18 @@ public class BerandaActivity extends AppCompatActivity {
 //    Hubungkan data ke adapter
     adapter = new TokoAdapter(this, listToko);
     rvToko.setAdapter(adapter);
+
+//    Cart Button
+        btnCart.setOnClickListener(v -> {
+            Intent intent = new Intent(BerandaActivity.this, KeranjangActivity.class);
+            startActivity(intent);
+        });
 }
 
 // Quick LInk
     private void setupNavigation(){
         navOrders.setOnClickListener(v -> {
-            // Un-comment baris di bawah jika OrdersActivity sudah dibuat
+            // pindah ke halaman pesanan
              Intent intent = new Intent(BerandaActivity.this, PesananAktifActivity.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
@@ -78,7 +89,7 @@ public class BerandaActivity extends AppCompatActivity {
         });
 
         navProfile.setOnClickListener(v -> {
-//             Un-comment baris di bawah jika ProfileActivity sudah dibuat
+// pindah ke halaman profile
              Intent intent = new Intent(BerandaActivity.this, ProfilActivity.class);
              startActivity(intent);
              overridePendingTransition(0, 0);

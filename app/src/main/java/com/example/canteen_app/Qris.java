@@ -3,6 +3,8 @@ package com.example.canteen_app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -14,6 +16,13 @@ public class Qris extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qris);
+
+//        Kunci tombol back
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+            }
+        });
 
 //        Persiapan Delay
         new Handler().postDelayed(() -> {
@@ -49,6 +58,9 @@ public class Qris extends AppCompatActivity {
             intent.putExtra("TOTAL", total);
             intent.putExtra("METODE", metode);
             intent.putExtra("JAM", jam);
+
+//            Hapus history page
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
 //            Pindah halaman
             startActivity(intent);

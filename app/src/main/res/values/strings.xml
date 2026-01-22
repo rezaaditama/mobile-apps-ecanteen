@@ -54,7 +54,7 @@
 
     <!-- Tentang Aplikasi -->
     <string name="about_app">Tentang Aplikasi</string>
-    <string name="app_name_custom">ke.kantin.</string>
+    <string name="app_name_custom">ke.kantin</string>
     <string name="app_version">Versi 1.0.0</string>
     <string name="short_description">Deskripsi Singkat</string>
     <string name="app_description">

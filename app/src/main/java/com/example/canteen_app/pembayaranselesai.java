@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class pembayaranselesai extends AppCompatActivity {
@@ -14,6 +15,14 @@ public class pembayaranselesai extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pembayaranselesai);
+
+//        Tombol back
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                goToBeranda();
+            }
+        });
 
 //        Tangkap data
         String id = getIntent().getStringExtra("ID");
@@ -46,8 +55,18 @@ public class pembayaranselesai extends AppCompatActivity {
 //        Tombol Lihat Pesanan
         btnLihat.setOnClickListener(v -> {
             Toast.makeText(this, "Terima Kasih Telah Memesan", Toast.LENGTH_SHORT).show();
-             startActivity(new Intent(this, PesananAktifActivity.class));
+            Intent intent = new Intent(this, PesananAktifActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             finish();
         });
+    }
+    // Fungsi helper untuk navigasi ke Beranda
+    private void goToBeranda() {
+        Intent intent = new Intent(this, BerandaActivity.class);
+        // Menghapus semua riwayat aktivitas (Checkout, Metode Bayar, Qris) dari memory
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

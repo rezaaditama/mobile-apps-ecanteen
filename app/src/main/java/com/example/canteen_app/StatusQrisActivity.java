@@ -28,6 +28,7 @@ public class StatusQrisActivity extends AppCompatActivity {
         TextView tvCatatan = findViewById(R.id.tvDetailCatatan);
         TextView tvTotal = findViewById(R.id.tvDetailTotal);
         RecyclerView rvItems = findViewById(R.id.rvDetailItems);
+        ImageView ivDetailGambarToko = findViewById(R.id.imgDetailToko);
 
         // Ambil data Menu
         Menu menuData = (Menu) getIntent().getSerializableExtra("ITEM_PESANAN");
@@ -36,6 +37,11 @@ public class StatusQrisActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         if (menuData != null) {
+//            Mengambil gambar
+            if (ivDetailGambarToko != null) {
+                ivDetailGambarToko.setImageResource(menuData.getShopImage());
+            }
+
             // Set Data ke UI
             tvNoPesanan.setText("#ORD-" + menuData.getParentOrderId());
             tvNamaToko.setText(menuData.getShopName());

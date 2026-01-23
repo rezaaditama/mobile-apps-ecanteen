@@ -39,9 +39,10 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.TokoViewHolder
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DetailTokoActivity.class);
 
-//            Mengirim ID toko dan nama toko
+//            Mengirim ID, nama dan gambar toko
             intent.putExtra("NAMA_TOKO", toko.getShop_name());
             intent.putExtra("ID_TOKO", toko.getShop_id());
+            intent.putExtra("GAMBAR_TOKO", toko.getShop_src());
 
             context.startActivity(intent);
         });

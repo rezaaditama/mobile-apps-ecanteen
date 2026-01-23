@@ -11,6 +11,7 @@ public class Menu implements Serializable{
     private int product_id;
     private int shop_id;
     private String shop_name;
+    private int shop_src;
     private boolean isFinished = false;
     private String parentOrderId;
     private String parentPickupTime;
@@ -19,12 +20,14 @@ public class Menu implements Serializable{
 
 
 
-    public Menu(int product_id, int shop_id, String shop_name, String product_name, int product_price, int product_path) {    this.product_id = product_id;
+
+    public Menu(int product_id, int shop_id, String shop_name, String product_name, int product_price, int product_path, int shop_src) {    this.product_id = product_id;
         this.shop_id = shop_id;
         this.shop_name = shop_name;
         this.product_name = product_name;
         this.product_price = product_price;
         this.product_path = product_path;
+        this.shop_src = shop_src;
     }
 
 //    Getter
@@ -40,6 +43,7 @@ public class Menu implements Serializable{
     public String getParentOrderId() { return parentOrderId; }
     public String getParentPickupTime() { return parentPickupTime; }
     public String getPaymentMethod() { return paymentMethod; }
+    public int getShopImage() { return shop_src; }
 
 //    Setter
     public void setQty(int qty) { this.qty = qty; }

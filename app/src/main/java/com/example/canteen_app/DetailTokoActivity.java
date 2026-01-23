@@ -31,7 +31,7 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
     // Variabel untuk menampung data dari Intent
     private int shopId;
     private String shopName;
-    private int shopImage;
+    private int shopImageResId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,22 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         // Tangkap Data dari Intent (TokoAdapter)
         shopId = getIntent().getIntExtra("ID_TOKO", 0);
         shopName = getIntent().getStringExtra("NAMA_TOKO");
-        shopImage = getIntent().getIntExtra("GAMBAR_TOKO", R.drawable.ic_user_avatar);
+        String shopImageName = getIntent().getStringExtra("GAMBAR_TOKO");
+
+//        Konversi nama foto jadi resource id
+        if (shopImageName != null) {
+            shopImageResId = getResources().getIdentifier(shopImageName, "drawable", getPackageName());
+        }
+
+//        Jika gambar tidak ditemukan
+        if (shopImageResId == 0) {
+            shopImageResId = R.drawable.ic_launcher_background;
+        }
+
+//        Set gambar di UI
+        if (shopName != null) {
+            tvNamaTokoHeader.setText(shopName);
+        }
 
         // Set nama toko di header
         if (shopName != null) {
@@ -68,7 +83,7 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
 //        Manipulasi Foto
         ImageView imgHeader = findViewById(R.id.img_detail_toko);
         if (imgHeader != null) {
-            imgHeader.setImageResource(shopImage);
+            imgHeader.setImageResource(shopImageResId);
         }
 
 //        Update diawal reload
@@ -109,21 +124,21 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         List<Menu> tempMenu = new ArrayList<>();
 
         if (shopId == 1) {
-            tempMenu.add(new Menu(101, shopId, shopName, "Nasi Goreng", 10000, R.drawable.nasi_goreng, shopImage));
-            tempMenu.add(new Menu(102, shopId, shopName, "Mie Rebus", 7000, R.drawable.mie_rebus, shopImage));
-            tempMenu.add(new Menu(103, shopId, shopName, "Mie Goreng", 7000, R.drawable.mie_goreng, shopImage));
-            tempMenu.add(new Menu(104, shopId, shopName, "Pop Ice", 5000, R.drawable.pop_ice, shopImage));
+            tempMenu.add(new Menu(101, shopId, shopName, "Nasi Goreng", 10000, R.drawable.nasi_goreng, shopImageResId));
+            tempMenu.add(new Menu(102, shopId, shopName, "Mie Rebus", 7000, R.drawable.mie_rebus, shopImageResId));
+            tempMenu.add(new Menu(103, shopId, shopName, "Mie Goreng", 7000, R.drawable.mie_goreng, shopImageResId));
+            tempMenu.add(new Menu(104, shopId, shopName, "Pop Ice", 5000, R.drawable.pop_ice, shopImageResId));
         } else if (shopId == 2) {
-            tempMenu.add(new Menu(201, shopId, shopName, "Ayam Geprek", 12000, R.drawable.ayam_geprek, shopImage));
-            tempMenu.add(new Menu(202, shopId, shopName, "Ayam Katsu", 12000, R.drawable.ayam_katsu, shopImage));
+            tempMenu.add(new Menu(201, shopId, shopName, "Ayam Geprek", 12000, R.drawable.ayam_geprek, shopImageResId));
+            tempMenu.add(new Menu(202, shopId, shopName, "Ayam Katsu", 12000, R.drawable.ayam_katsu, shopImageResId));
         } else if (shopId == 3) {
-            tempMenu.add(new Menu(301, shopId, shopName, "Bakso", 12000, R.drawable.bakso, shopImage));
-            tempMenu.add(new Menu(302, shopId, shopName, "Mie Ayam", 12000, R.drawable.mie_ayam, shopImage));
-            tempMenu.add(new Menu(303, shopId, shopName, "Teh sosro", 6000, R.drawable.teh_sosro, shopImage));
+            tempMenu.add(new Menu(301, shopId, shopName, "Bakso", 12000, R.drawable.bakso, shopImageResId));
+            tempMenu.add(new Menu(302, shopId, shopName, "Mie Ayam", 12000, R.drawable.mie_ayam, shopImageResId));
+            tempMenu.add(new Menu(303, shopId, shopName, "Teh sosro", 6000, R.drawable.teh_sosro, shopImageResId));
         } else if (shopId == 4) {
-            tempMenu.add(new Menu(401, shopId, shopName, "Seblak", 8000, R.drawable.seblak, shopImage));
-            tempMenu.add(new Menu(402, shopId, shopName, "Bakso Aci", 8000, R.drawable.baso_aci, shopImage));
-            tempMenu.add(new Menu(403, shopId, shopName, "Le Mineral", 6000, R.drawable.le_mineral, shopImage));
+            tempMenu.add(new Menu(401, shopId, shopName, "Seblak", 8000, R.drawable.seblak, shopImageResId));
+            tempMenu.add(new Menu(402, shopId, shopName, "Bakso Aci", 8000, R.drawable.baso_aci, shopImageResId));
+            tempMenu.add(new Menu(403, shopId, shopName, "Le Mineral", 6000, R.drawable.le_mineral, shopImageResId));
         }
 
         listDataMenu.clear();

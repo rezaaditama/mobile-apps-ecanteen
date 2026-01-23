@@ -17,10 +17,6 @@ public class Menu implements Serializable{
     private String parentPickupTime;
     private String paymentMethod;
 
-
-
-
-
     public Menu(int product_id, int shop_id, String shop_name, String product_name, int product_price, int product_path, int shop_src) {    this.product_id = product_id;
         this.shop_id = shop_id;
         this.shop_name = shop_name;

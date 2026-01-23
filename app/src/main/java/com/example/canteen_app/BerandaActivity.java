@@ -99,10 +99,10 @@ public class BerandaActivity extends AppCompatActivity {
 // Fungsi list toko
 private void prepareData() {
     listToko = new ArrayList<>();
-    listToko.add(new Toko(1, "Everyday Kitchen", "Kantin UIKA Lantai 2", R.drawable.everyday_kitchen));
-    listToko.add(new Toko(2, "Crispy Kitchen", "Kantin UIKA Lantai 2", R.drawable.crispy_kitchen));
-    listToko.add(new Toko(3, "Traditional Noodle", "Kantin UIKA Lantai 1", R.drawable.traditional_noodle));
-    listToko.add(new Toko(4, "Spice Bowl", "Kantin UIKA Lantai 1", R.drawable.spice_bowl));
+    listToko.add(new Toko(1, "Everyday Kitchen", "Kantin UIKA Lantai 2", "everyday_kitchen"));
+    listToko.add(new Toko(2, "Crispy Kitchen", "Kantin UIKA Lantai 2", "crispy_kitchen"));
+    listToko.add(new Toko(3, "Traditional Noodle", "Kantin UIKA Lantai 1", "traditional_noodle"));
+    listToko.add(new Toko(4, "Spice Bowl", "Kantin UIKA Lantai 1", "spice_bowl"));
 }
 
 //    Set Tombol Aktif

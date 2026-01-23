@@ -33,7 +33,17 @@ public class TokoAdapter extends RecyclerView.Adapter<TokoAdapter.TokoViewHolder
 
         holder.tvNama.setText(toko.getShop_name());
         holder.tvLokasi.setText(toko.getShop_location());
-        holder.imgToko.setImageResource(toko.getShop_src());
+
+//        Mengubah string menjadi intenger
+        String imageName = toko.getShop_src();
+        int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+
+//        Gunakan gambar default
+        if (resID != 0) {
+            holder.imgToko.setImageResource(resID);
+        } else {
+            holder.imgToko.setImageResource(R.drawable.ic_launcher_background);
+        }
 
 //        Persiapan untuk pindah ke daftar menu
         holder.itemView.setOnClickListener(v -> {

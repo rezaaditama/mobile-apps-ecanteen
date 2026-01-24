@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditMenu1Penjual"
+    android:orientation="vertical"
+    android:background="@color/cream">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/btnBack_edit_menu2_penjual"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_arrow_left" />
+
+        <TextView
+            android:id="@+id/tv1_edit_menu2_penjual"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_menu"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/tvBatal_edit_menu2_penjual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/batal"
+            android:textSize="14sp"
+            android:textColor="@color/hijau"
+            android:fontFamily="@font/poppins_bold"/>
+    </LinearLayout>
+
+    <!-- CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- IMAGE MENU -->
+            <ImageView
+                android:id="@+id/imgMenu1_edit_menu2_penjual"
+                android:layout_width="286dp"
+                android:layout_height="274dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_image_menu_penjual"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_food2" />
+
+            <!-- NAMA MENU -->
+            <TextView
+                android:id="@+id/tv2_edit_menu2_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nama_menu"
+                android:textSize="11sp"
+                android:textColor="@color/hijau"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <EditText
+                android:id="@+id/etNamaMenu1_edit_menu2_penjual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_nama_menu2"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_input_penjual"
+                android:padding="14dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- HARGA -->
+            <TextView
+                android:id="@+id/tv4_edit_menu2_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/harga"
+                android:textSize="11sp"
+                android:textColor="@color/hijau"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_penjual"
+                android:padding="14dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/tv3_edit_menu2_penjual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp"
+                    android:textStyle="bold"
+                    android:textColor="@color/abu"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <EditText
+                    android:id="@+id/etHarga_edit_menu2_penjual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@null"
+                    android:hint="@string/hint_harga2"
+                    android:inputType="number"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- BUTTON SIMPAN -->
+            <Button
+                android:id="@+id/btnSimpan_edit_menu2_penjual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/simpan_perubahan"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_primary_penjual"
+                android:layout_marginTop="32dp"
+                android:paddingVertical="14dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

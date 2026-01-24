@@ -100,13 +100,20 @@ public class LoginActivity extends AppCompatActivity {
 
                     Toast.makeText(LoginActivity.this, "Login Berhasil! Halo " + loginResponse.getNama(), Toast.LENGTH_SHORT).show();
 
-                    // Pindah ke Beranda
-                    Intent intent = new Intent(LoginActivity.this, BerandaActivity.class);
+//                    Filter berdasarkan rola
+                    Intent intent;
+                    if (role.equalsIgnoreCase("penjual")) {
+                        // Jika role penjual, arahkan ke BerandaPenjualActivity
+                        intent = new Intent(LoginActivity.this, BerandaPenjualActivity.class);
+                    } else {
+                        // Jika role pembeli, arahkan ke BerandaActivity
+                        intent = new Intent(LoginActivity.this, BerandaActivity.class);
+                    }
+
                     startActivity(intent);
-                    finish();
+                    finish(); // Hapus LoginActivity dari tumpukan (backstack)
                 } else {
-                    // Jika status code 401 atau 404
-                    Toast.makeText(LoginActivity.this, "Email atau Password salah!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Email, Password, atau Role salah!", Toast.LENGTH_SHORT).show();
                 }
             }
 

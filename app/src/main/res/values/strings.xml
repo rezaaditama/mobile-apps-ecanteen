@@ -70,5 +70,51 @@
     <string name="logout">Keluar</string>
     <string name="lg_cancel">Batal</string>
 
+    <!-- Beranda Penjual -->
+    <string name="store_name">Warung Mang Ade</string>
+    <string name="store_status">Buka</string>
+    <string name="total_income">Total Pemasukan Bulan Ini</string>
+    <string name="total_income_value">Rp 2.500.000</string>
+    <string name="order_done">150 Pesanan Selesai</string>
+    <string name="report_sales">Laporan\nPenjualan</string>
+    <string name="process_order">Pesanan Aktif</string>
+    <string name="pesanan_aktif">Pesanan Aktif</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="nama_reza">Reza</string>
+    <string name="id_reza">ID: #ORD-1768981359775</string>
+    <string name="pesanan_baru">Pesanan Baru</string>
+    <string name="status_siap">Siap diambil</string>
 
+    <!-- Menu Penjual -->
+    <string name="menu_title">Menu</string>
+    <string name="menu_subtitle">Atur daftar jualanmu</string>
+    <string name="total_menu">TOTAL MENU</string>
+    <string name="menu_out">HABIS</string>
+    <string name="menu_name1">Es Teh</string>
+    <string name="menu_price1">Rp 3.000</string>
+    <string name="menu_name2">Nasi Goreng Ade</string>
+    <string name="menu_price2">Rp 15.000</string>
+    <string name="available">Tersedia</string>
+    <string name="edit_menu">Edit Menu</string>
+
+    <!-- Edit Menu Penjual -->
+    <string name="batal">Batal</string>
+    <string name="nama_menu">Nama Menu</string>
+    <string name="harga">Harga (Rp)</string>
+    <string name="rp">Rp</string>
+    <string name="hint_nama_menu1">Es Teh</string>
+    <string name="hint_harga1">3.000</string>
+    <string name="hint_nama_menu2">Nasi Goreng Ade</string>
+    <string name="hint_harga2">15.000</string>
+    <string name="simpan_perubahan">Simpan Perubahan</string>
+
+    <!-- Profil Penjual -->
+    <string name="profil_nama_penjual">Ade</string>
+
+    <!-- Edit Profil Penjual -->
+    <string name="edt_profil_penjual_nama_penjual">Ade</string>
+
+<!--    Toko-->
+    <string name="edt_profil_nama_toko">NAMA TOKO</string>
+    <string name="edt_profil_nama_penjual">NAMA PENJUAL</string>
 </resources>

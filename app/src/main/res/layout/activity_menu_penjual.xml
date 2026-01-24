@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuPenjual"
+    android:orientation="vertical"
+    android:background="@color/cream">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="15dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv1_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_title"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <TextView
+                android:id="@+id/tv2_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_subtitle"
+                android:textSize="13sp"
+                android:textColor="@color/hijau"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_menu_penjual_logo_store"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_white_penjual"
+            android:padding="8dp"
+            android:src="@drawable/ic_store"/>
+    </LinearLayout>
+
+    <!-- INFO CARD -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_white_penjual"
+            android:padding="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv3_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_menu"
+                android:textSize="10sp"
+                android:textColor="@color/hijau"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <TextView
+                android:id="@+id/tv4_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"/>
+        </LinearLayout>
+
+        <Space android:layout_width="12dp" android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_white_penjual"
+            android:padding="12dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv5_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_out"
+                android:textSize="10sp"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <TextView
+                android:id="@+id/tv6_menu_penjual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- SCROLL -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- CARD MENU ITEM -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white_penjual"
+                android:padding="12dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_menu_penjual_menu1"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_image_radius_penjual"
+                        android:src="@drawable/sample_food1"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv7_menu_penjual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_name1"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_bold"/>
+
+                        <TextView
+                            android:id="@+id/tv8_menu_penjual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_price1"
+                            android:textColor="@color/hijau"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins_bold"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="12dp">
+
+                            <TextView
+                                android:id="@+id/tv9_menu1_penjual"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/available"
+                                android:textSize="12sp"
+                                android:textColor="@color/hijau"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"/>
+
+                            <Switch
+                                android:id="@+id/switch_menu_penjual_menu1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginVertical="12dp"/>
+
+                <Button
+                    android:id="@+id/btn_menu_penjual_edit_menu1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_menu"
+                    android:textColor="@color/hijau"
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@drawable/bg_button_orange_penjual" />
+            </LinearLayout>
+
+            <!-- CARD MENU ITEM -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white_penjual"
+                android:padding="12dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_menu_penjual_menu2"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/bg_image_radius_penjual"
+                        android:src="@drawable/sample_food2"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv10_menu_penjual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_name2"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_bold"/>
+
+                        <TextView
+                            android:id="@+id/tv11_menu_penjual"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_price2"
+                            android:textColor="@color/hijau"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/poppins_bold"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="12dp">
+
+                            <TextView
+                                android:id="@+id/tv12_menu2_penjual"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/available"
+                                android:textSize="12sp"
+                                android:textColor="@color/hijau"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_regular"/>
+
+                            <Switch
+                                android:id="@+id/switch_menu_penjual_menu2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider"
+                    android:layout_marginVertical="12dp"/>
+
+                <Button
+                    android:id="@+id/btn_menu_penjual_edit_menu2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_menu"
+                    android:textColor="@color/hijau"
+                    android:fontFamily="@font/poppins_regular"
+                    android:background="@drawable/bg_button_orange_penjual" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bg_navbar_bottom"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:elevation="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:id="@+id/menu_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_home"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_home"
+                app:tint="#9E9E9E" />
+
+            <TextView
+                android:id="@+id/tv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beranda"
+                android:textSize="12sp"
+                android:textColor="#9E9E9E" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_penjual"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_cart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_orders"
+                app:tint="@color/primary" />
+
+            <TextView
+                android:id="@+id/tv_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu Penjualan"
+                android:textSize="12sp"
+                android:textColor="@color/primary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menu_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_user_avatar"
+                app:tint="#9E9E9E" />
+
+            <TextView
+                android:id="@+id/tv_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profil"
+                android:textSize="12sp"
+                android:textColor="#9E9E9E" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

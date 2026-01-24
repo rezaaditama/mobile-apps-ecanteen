@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-<!--    Izin internet untuk mengakses API-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Izin internet untuk mengakses API -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,19 +9,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.Canteen_app">
+        android:theme="@style/Theme.Canteen_app"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity
-            android:name=".StatusCodActivity"
-            android:exported="false" />
-        <activity
             android:name=".StatusQrisActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PesananSelesaiActivity"
             android:exported="false" />
         <activity
             android:name=".PesananAktifActivity"
@@ -41,7 +34,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,9 +46,6 @@
             android:exported="false" />
         <activity
             android:name=".Register"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".BerandaActivity"
@@ -74,6 +64,51 @@
             android:exported="false" />
         <activity
             android:name=".TentangAplikasiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditMenu2PenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogoutPenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TentangAplikasiPenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfilPenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilPenjualActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditMenu1Penjual"
+            android:exported="false" />
+        <activity
+            android:name=".MenuPenjual"
+            android:exported="false" />
+        <activity
+            android:name=".LaporanPenjualanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailPemesananActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailQrisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pesanan"
+            android:exported="false" />
+        <activity
+            android:name=".pesanan_selesai"
+            android:exported="false" />
+        <activity
+            android:name=".proses_ambil"
+            android:exported="false" />
+        <activity
+            android:name=".proses_pesanan"
+            android:exported="false" />
+        <activity
+            android:name=".BerandaPenjualActivity"
             android:exported="false" />
     </application>
 

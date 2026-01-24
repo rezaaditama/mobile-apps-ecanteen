@@ -1,9 +1,11 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +13,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.button.MaterialButton;
-
 public class ProfilActivity extends AppCompatActivity {
     private LinearLayout menuEditProfil, btnLogout, menuTentangAplikasi;
     private ImageView btnBack;
+    private TextView tvNama, tvEmail, tvTelepon;
 
 
     @Override
@@ -29,34 +30,60 @@ public class ProfilActivity extends AppCompatActivity {
             return insets;
         });
 
+//        Inisialisasi
+        tvNama = findViewById(R.id.tvPflNama);
+        tvEmail = findViewById(R.id.tvPflEmail);
+        tvTelepon = findViewById(R.id.tvPflTelepon);
+        btnBack = findViewById(R.id.btnBackProfil);
+        menuEditProfil = findViewById(R.id.menu_edit_profile);
+        menuTentangAplikasi = findViewById(R.id.menuTentangApk);
+        btnLogout = findViewById(R.id.btn_logout_profil);
+
+//        Ambil data profile
+        displayUserData();
+
 //        Tombol back
-        ImageView btnBack = findViewById(R.id.btnBackProfil);
         btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfilActivity.this, BerandaActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
             finish();
         });
 
-        menuEditProfil = findViewById(R.id.menu_edit_profile);
+//        Edit Profile
         menuEditProfil.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilActivity.this, EditProfilActivity.class);
             startActivity(intent);
         });
 
         // MENU TENTANG APLIKASI
-        menuTentangAplikasi = findViewById(R.id.menuTentangApk);
         menuTentangAplikasi.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilActivity.this, TentangAplikasiActivity.class);
             startActivity(intent);
         });
 
         // BUTTON LOGOUT
-        btnLogout = findViewById(R.id.btn_logout_profil);
         btnLogout.setOnClickListener(v -> {
             Intent intent = new Intent(ProfilActivity.this, LogoutActivity.class);
             startActivity(intent);
-
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayUserData();
+    }
+
+//    Tampilkan data user
+    private void displayUserData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+
+        // Ambil data dengan key yang sama saat Login
+        String nama = sharedPreferences.getString("USER_NAMA", "Nama tidak ditemukan");
+        String email = sharedPreferences.getString("USER_EMAIL", "Email tidak ditemukan");
+        String telp = sharedPreferences.getString("USER_TELP", "-");
+
+        // Set ke TextView
+        tvNama.setText(nama);
+        tvEmail.setText(email);
+        tvTelepon.setText(telp);
     }
 }

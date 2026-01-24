@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -33,12 +35,26 @@ public class BerandaActivity extends AppCompatActivity {
     private List<Toko> listToko;
     private LinearLayout navOrders, navProfile;
     private ImageView btnCart;
+    private TextView tvGreetingName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_beranda);
+
+        // Cek user
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("IS_LOGGED_IN", false);
+
+        if (!isLoggedIn) {
+            // Jika belum login, lempar kembali ke LoginActivity
+            Intent intent = new Intent(BerandaActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -50,6 +66,23 @@ public class BerandaActivity extends AppCompatActivity {
     navOrders = findViewById(R.id.menu_history);
     navProfile = findViewById(R.id.menu_profile);
     btnCart = findViewById(R.id.btn_cart);
+    tvGreetingName = findViewById(R.id.tv_greeting_2);
+
+//    Manipulasi nama
+        String namaLengkap = sharedPreferences.getString("USER_NAMA", "User");
+        String namaPanggilan = namaLengkap;
+
+//        Nama kata pertama
+        if (namaLengkap != null && !namaLengkap.trim().isEmpty()) {
+            // Memecah String berdasarkan spasi
+            String[] kata = namaLengkap.trim().split("\\s+");
+            if (kata.length > 0) {
+                namaPanggilan = kata[0]; // Ambil kata pertama saja
+            }
+        }
+
+//    Set nama
+        tvGreetingName.setText(namaPanggilan + "! 🎓");
 
 //    Inisialisasi List dan Adapter
         listToko = new ArrayList<>();

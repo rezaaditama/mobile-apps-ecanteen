@@ -121,6 +121,7 @@ private void goToBeranda() {
                     if (order.isFinished() == statusSelesai) {
                         // Bongkar pesanan
                         for (Menu item : order.getItems()) {
+                            item.convertPathToResourceId(PesananAktifActivity.this);
                             // Tempelkan data order ke tiap menu
                             item.setParentOrderId(order.getOrderId());
                             item.setParentPickupTime(order.getPickupTime());

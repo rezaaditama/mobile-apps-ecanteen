@@ -14,10 +14,11 @@ public class Menu implements Serializable {
     private int product_id;
     @SerializedName("shop_id")
     private int shop_id;
+    @SerializedName("note")
+    private String note = "";
 
     //    Join dengan tabel orders_items
     private int qty = 0;
-    private String note = "";
     private String shop_name;
 
     //Helper

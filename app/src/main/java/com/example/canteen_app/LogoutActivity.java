@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -24,17 +25,26 @@ public class LogoutActivity extends AppCompatActivity {
             return insets;
         });
 
+//        btn cancel
         btnCancelLogout = findViewById(R.id.lgtBtnCancel);
         lgtBtnLogout = findViewById(R.id.lgtBtnLogout);
 
+//        Logika logout
         lgtBtnLogout.setOnClickListener(v -> {
+//            Hapus data dari SharedPreferences
+            SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+
+//            Pindah ke login
             Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
             startActivity(intent);
-            finish(); //
+            finish();
         });
 
+//        Logika batal
         btnCancelLogout.setOnClickListener(v -> {
             finish();
         });

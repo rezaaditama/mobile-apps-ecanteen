@@ -17,6 +17,7 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
 //    Inisialisasi Variabel
     private Context context;
     private List<Menu> listMenu;
+
     public PesananAdapter(Context context, List<Menu> listMenu) {
         this.context = context;
         this.listMenu = listMenu;
@@ -33,9 +34,14 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
     public void onBindViewHolder(@NonNull PesananViewHolder holder, int position) {
         Menu menu = listMenu.get(position);
 
-        // Set data menu dasar
-        holder.imgMenu.setImageResource(menu.getProductPath());
-        holder.tvNamaToko.setText(menu.getShopName());
+        // Set gambar
+        if (menu.getProductPath() != 0) {
+            holder.imgMenu.setImageResource(menu.getProductPath());
+        } else {
+            holder.imgMenu.setImageResource(R.drawable.logo);
+        }
+//        set nama toko dan nama menu
+        holder.tvNamaToko.setText(menu.getShopName() != null ? menu.getShopName() : "Toko UIKA");
         holder.tvNamaMenu.setText(menu.getProductName() + " (x" + menu.getQty() + ")");
 
 //        Format harga
@@ -61,7 +67,7 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
         } else {
 //            Kalau pembayaran tunai
             if ("Tunai".equalsIgnoreCase(menu.getPaymentMethod())) {
-                holder.tvStatus.setText("Belum Bayar (Bayar di Kasir)");
+                holder.tvStatus.setText("Bayar di Kasir");
                 holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
             } else {
                 // Jika QRIS, otomatis sudah bayar tinggal ambil

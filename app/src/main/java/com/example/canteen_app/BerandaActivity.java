@@ -3,10 +3,12 @@ package com.example.canteen_app;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BerandaActivity extends AppCompatActivity {
 //    Deklarasi Variabel
@@ -45,11 +51,11 @@ public class BerandaActivity extends AppCompatActivity {
     navProfile = findViewById(R.id.menu_profile);
     btnCart = findViewById(R.id.btn_cart);
 
-//        Panggil navigasi
-        setupNavigation();
+//    Inisialisasi List dan Adapter
+        listToko = new ArrayList<>();
+        adapter = new TokoAdapter(this, listToko);
+        rvToko.setAdapter(adapter);
 
-//    Fetching Data
-    prepareData();
 
 //    Inisialisasi RecyclerView Menggunakan GridLayoutManager
     rvToko.setLayoutManager(new GridLayoutManager(this, 2));
@@ -67,18 +73,20 @@ public class BerandaActivity extends AppCompatActivity {
         });
 
 
-//    Hubungkan data ke adapter
-    adapter = new TokoAdapter(this, listToko);
-    rvToko.setAdapter(adapter);
+//        Panggil navigasi
+        setupNavigation();
 
-//    Cart Button
+//    Fetching Data dari endpoint https://be-mobile-ecanteen.vercel.app/api/toko
+        prepareData();
+
+        //    Cart Button
         btnCart.setOnClickListener(v -> {
             Intent intent = new Intent(BerandaActivity.this, KeranjangActivity.class);
             startActivity(intent);
         });
-}
+    }
 
-// Quick LInk
+// Quick Link
     private void setupNavigation(){
         navOrders.setOnClickListener(v -> {
             // pindah ke halaman pesanan
@@ -98,11 +106,32 @@ public class BerandaActivity extends AppCompatActivity {
 
 // Fungsi list toko
 private void prepareData() {
-    listToko = new ArrayList<>();
-    listToko.add(new Toko(1, "Everyday Kitchen", "Kantin UIKA Lantai 2", "everyday_kitchen"));
-    listToko.add(new Toko(2, "Crispy Kitchen", "Kantin UIKA Lantai 2", "crispy_kitchen"));
-    listToko.add(new Toko(3, "Traditional Noodle", "Kantin UIKA Lantai 1", "traditional_noodle"));
-    listToko.add(new Toko(4, "Spice Bowl", "Kantin UIKA Lantai 1", "spice_bowl"));
+//    Panggil API Service
+    ApiService apiService = RetrofitClient.getApiService();
+
+//    Get request ke https://be-mobile-ecanteen.vercel.app/api/toko
+    apiService.getDaftarToko().enqueue(new Callback<List<Toko>>() {
+        @Override
+        public void onResponse(Call<List<Toko>> call, Response<List<Toko>> response) {
+            if (response.isSuccessful() && response.body() != null) {
+                // Bersihkan list lama dan masukkan data baru dari server
+                listToko.clear();
+                listToko.addAll(response.body());
+
+                // Beritahu adapter untuk memperbarui tampilan UI
+                adapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(BerandaActivity.this, "Gagal memuat data", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void onFailure(Call<List<Toko>> call, Throwable t) {
+            // Log jika terjadi masalah koneksi atau parsing
+            Log.e("API_ERROR", "Error: " + t.getMessage());
+            Toast.makeText(BerandaActivity.this, "Cek koneksi internet Anda", Toast.LENGTH_SHORT).show();
+        }
+    });
 }
 
 //    Set Tombol Aktif
@@ -117,7 +146,6 @@ private void prepareData() {
         // Efek untuk tombol lainnya (Inactive)
         tombolTidakAktif1.setBackgroundResource(R.drawable.btn_toogle_inactive);
         tombolTidakAktif1.setTextColor(warnaPrimary);
-
         tombolTidakAktif2.setBackgroundResource(R.drawable.btn_toogle_inactive);
         tombolTidakAktif2.setTextColor(warnaPrimary);
     }

@@ -2,6 +2,7 @@ package com.example.canteen_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
@@ -11,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class metodepembayaran extends AppCompatActivity {
     //    Deklarasi Variabel
@@ -65,43 +70,67 @@ public class metodepembayaran extends AppCompatActivity {
 
     // Untuk pembayaran cash
     private void prosesPesananTunai(String metode, String jam) {
+//        Ambil user dari sharedPreferences
+        android.content.SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
 
         // Ambil data dari keranjang
         List<Menu> keranjangSekarang = CartManager.getInstance().getCartList();
-
-        // Tandai setiap menu dengan metode bayar Tunai
-        for (Menu m : keranjangSekarang) {
-
-//            Buat ID unik
-            String idOrderIndividu = "INV-" + System.currentTimeMillis() + "-" + m.getProductId();
-
-//            Set data pembayaran tunai
-            m.setParentOrderId(idOrderIndividu);
-            m.setParentPickupTime(jam);
-            m.setPaymentMethod(metode);
-
-//                Set pesanan menjadi per item
-            List<Menu> itemTunggal = new ArrayList<>();
-            itemTunggal.add(m);
-
-//            Hitung harga per item
-            int totalHargaItem = m.getProductPrice() * m.getQty();
-
-//            Simpan jadi objek sendiri
-            Order orderBaru = new Order(idOrderIndividu, itemTunggal, jam, totalHargaItem, metode);
-            CartManager.getInstance().addOrderToHistory(orderBaru);
+        if (keranjangSekarang.isEmpty()) {
+            Toast.makeText(this, "Keranjang kosong!", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-//        Bersihkan keranjang
+//        Buat 1 order ID utama
+        String masterOrderId = "INV-" + System.currentTimeMillis();
+        int totalHargaSemua = 0;
+        for (Menu item : keranjangSekarang) {
+            totalHargaSemua += (item.getProductPrice() * item.getQty());
+        }
+
+//        Buat object untuk dikirim ke API
+        Order orderBaru = new Order(masterOrderId, keranjangSekarang, jam, totalHargaSemua, metode, userId);
+
+//        Kirim ke server
+        kirimPesananKeServer(orderBaru);
+    }
+
+    private void kirimPesananKeServer(Order order) {
+//        API
+        ApiService apiService = RetrofitClient.getApiService();
+        apiService.simpanPesanan(order).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    // Jika sukses di server, baru lakukan aksi lokal
+                    aksiSetelahBerhasil(order);
+                } else {
+                    Toast.makeText(metodepembayaran.this, "Server menolak pesanan: " + response.code(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+//            Kalau API error
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("API_ERROR", "Gagal kirim: " + t.getMessage());
+                Toast.makeText(metodepembayaran.this, "Gagal terhubung ke server. Periksa internet Anda.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void aksiSetelahBerhasil(Order order) {
+        // Simpan ke riwayat lokal aplikasi
+        CartManager.getInstance().addOrderToHistory(order);
+
+        // Bersihkan keranjang
         CartManager.getInstance().clearCart();
 
-//        Pindah ke halaman aktif
+        // Pindah ke halaman Pesanan Aktif
         Intent intent = new Intent(metodepembayaran.this, PesananAktifActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
-//          Toast
-        Toast.makeText(this, "Pesanan Berhasil! Silakan bayar di toko masing-masing.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Pesanan Berhasil Dibuat!", Toast.LENGTH_LONG).show();
         finish();
     }
 }

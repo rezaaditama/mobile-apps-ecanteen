@@ -34,7 +34,7 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
         Menu menu = listMenu.get(position);
 
         // Set data menu dasar
-        holder.imgMenu.setImageResource(menu.getShopImage());
+        holder.imgMenu.setImageResource(menu.getProductPath());
         holder.tvNamaToko.setText(menu.getShopName());
         holder.tvNamaMenu.setText(menu.getProductName() + " (x" + menu.getQty() + ")");
 

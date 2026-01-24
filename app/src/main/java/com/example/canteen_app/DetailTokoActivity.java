@@ -2,6 +2,7 @@ package com.example.canteen_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailTokoActivity extends AppCompatActivity implements CardListener {
 
@@ -49,8 +54,8 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         // Inisialisasi View berdasarkan id
         rvMenu = findViewById(R.id.rv_daftar_toko);
         tvTotalProduct = findViewById(R.id.tv_total_product);
-        tvNamaTokoHeader = findViewById(R.id.tv_nama_toko); // Pastikan ID ini ada di XML
-        btnCart = findViewById(R.id.btn_cart);    // Pastikan ID ini ada di XML
+        tvNamaTokoHeader = findViewById(R.id.tv_nama_toko);
+        btnCart = findViewById(R.id.btn_cart);
 
 //        Tombol back
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
@@ -70,49 +75,36 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
             shopImageResId = R.drawable.ic_launcher_background;
         }
 
-//        Set gambar di UI
-        if (shopName != null) {
-            tvNamaTokoHeader.setText(shopName);
-        }
+//        Manipulasi nama toko
+        if (tvNamaTokoHeader != null) tvNamaTokoHeader.setText(shopName != null ? shopName : "Detail Toko");
 
-        // Set nama toko di header
-        if (shopName != null) {
-            tvNamaTokoHeader.setText(shopName);
-        }
-
-//        Manipulasi Foto
+//        Manipulasi Foto toko
         ImageView imgHeader = findViewById(R.id.img_detail_toko);
-        if (imgHeader != null) {
-            imgHeader.setImageResource(shopImageResId);
-        }
+        if (imgHeader != null) imgHeader.setImageResource(shopImageResId);
 
-//        Update diawal reload
-        updateBottomBar();
-
-        // Siapkan Data Menu (Filter berdasarkan idToko)
+//        Inisialisasi List dan Adapter
         listDataMenu = new ArrayList<>();
-
-//        Siapkan data navbar bottom
-        populateMenuData();
-
-        // Set Adapter
         rvMenu.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MenuAdapter(this, listDataMenu, this);
         rvMenu.setAdapter(adapter);
+
+//        Update diawal reload
+        populateMenuData();
+        updateBottomBar();
 
         // Logika Tombol Cart
         btnCart.setOnClickListener(v -> {
             if (CartManager.getInstance().getCartList().isEmpty()) {
                 Toast.makeText(this, "Keranjang masih kosong!", Toast.LENGTH_SHORT).show();
             } else {
-                // Untuk sementara kita biarkan begini sampai Anda siap membuat CartActivity
-                Toast.makeText(this, "Menuju Halaman Keranjang...", Toast.LENGTH_SHORT).show();
+                // Pindah ke keranjang activity
                  Intent intent = new Intent(this, KeranjangActivity.class);
                  startActivity(intent);
             }
         });
     }
 
+//    Refresh data ketika onResume
     @Override
     protected void onResume() {
         super.onResume();
@@ -121,52 +113,61 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
     }
 
     private void populateMenuData() {
-        List<Menu> tempMenu = new ArrayList<>();
+        if (shopId == 0) return;
 
-        if (shopId == 1) {
-            tempMenu.add(new Menu(101, shopId, shopName, "Nasi Goreng", 10000, R.drawable.nasi_goreng, shopImageResId));
-            tempMenu.add(new Menu(102, shopId, shopName, "Mie Rebus", 7000, R.drawable.mie_rebus, shopImageResId));
-            tempMenu.add(new Menu(103, shopId, shopName, "Mie Goreng", 7000, R.drawable.mie_goreng, shopImageResId));
-            tempMenu.add(new Menu(104, shopId, shopName, "Pop Ice", 5000, R.drawable.pop_ice, shopImageResId));
-        } else if (shopId == 2) {
-            tempMenu.add(new Menu(201, shopId, shopName, "Ayam Geprek", 12000, R.drawable.ayam_geprek, shopImageResId));
-            tempMenu.add(new Menu(202, shopId, shopName, "Ayam Katsu", 12000, R.drawable.ayam_katsu, shopImageResId));
-        } else if (shopId == 3) {
-            tempMenu.add(new Menu(301, shopId, shopName, "Bakso", 12000, R.drawable.bakso, shopImageResId));
-            tempMenu.add(new Menu(302, shopId, shopName, "Mie Ayam", 12000, R.drawable.mie_ayam, shopImageResId));
-            tempMenu.add(new Menu(303, shopId, shopName, "Teh sosro", 6000, R.drawable.teh_sosro, shopImageResId));
-        } else if (shopId == 4) {
-            tempMenu.add(new Menu(401, shopId, shopName, "Seblak", 8000, R.drawable.seblak, shopImageResId));
-            tempMenu.add(new Menu(402, shopId, shopName, "Bakso Aci", 8000, R.drawable.baso_aci, shopImageResId));
-            tempMenu.add(new Menu(403, shopId, shopName, "Le Mineral", 6000, R.drawable.le_mineral, shopImageResId));
-        }
+//        Panggil APiService
+        ApiService apiService = RetrofitClient.getApiService();
 
-        listDataMenu.clear();
-        List<Menu> currentCart = CartManager.getInstance().getCartList();
+        // Ambil menu berdasarkan ID Toko dari server
+        apiService.getMenuByToko(shopId).enqueue(new Callback<List<Menu>>() {
+            @Override
+            public void onResponse(Call<List<Menu>> call, Response<List<Menu>> response) {
 
-        // Sinkronisasi data lokal dengan CartManager agar Qty tidak reset ke 0
-        for (Menu mRaw : tempMenu) {
-            Menu foundInCart = null;
-            for (Menu mCart : currentCart) {
-                if (mRaw.getProductId() == mCart.getProductId()) {
-                    foundInCart = mCart;
-                    break;
+    //        Kalau fetching sukses
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Menu> fetchedMenu = response.body();
+                    List<Menu> currentCart = CartManager.getInstance().getCartList();
+
+                    listDataMenu.clear();
+
+                    for (Menu mRaw : fetchedMenu) {
+    //                    Ubah string gambar menjadi id resource
+                        mRaw.convertPathToResourceId(DetailTokoActivity.this);
+
+    //                    Set Shop Name untuk cart
+                        mRaw.setShopName(shopName);
+
+    //                    Sinkron dengan CartManager
+                        Menu foundInCart = null;
+                        for (Menu mCart : currentCart) {
+                            if (mRaw.getProductId() == mCart.getProductId()) {
+                                foundInCart = mCart;
+                                break;
+                            }
+                        }
+
+    //                  Kalau ada di cart, ambil dari cart
+                        if (foundInCart != null) {
+                            listDataMenu.add(foundInCart);
+                        } else {
+                            listDataMenu.add(mRaw);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(DetailTokoActivity.this, "Gagal mengambil menu", Toast.LENGTH_SHORT).show();
                 }
             }
 
-            if (foundInCart != null) {
-//                Pakai objek yang ada di CartManager
-                listDataMenu.add(foundInCart);
-            } else {
-//                Pakai objek yang ada di Menu
-                listDataMenu.add(mRaw);
-            }
+//        Kalau gagal mengambil menu
+        @Override
+        public void onFailure(Call<List<Menu>> call, Throwable t) {
+            Log.e("API_ERROR", "Error: " + t.getMessage());
+            Toast.makeText(DetailTokoActivity.this, "Cek koneksi internet", Toast.LENGTH_SHORT).show();
         }
+    });
+}
 
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-        }
-    }
     // Fungsi pembantu untuk update tampilan jumlah produk di bar bawah
     private void updateBottomBar() {
         int totalQty = 0;
@@ -178,6 +179,7 @@ public class DetailTokoActivity extends AppCompatActivity implements CardListene
         tvTotalProduct.setText(totalQty + " Produk");
 
         // Opsional: Sembunyikan bar jika keranjang kosong
+        View checkoutBar = findViewById(R.id.layout_checkout_bar);
         if (totalQty == 0) {
             findViewById(R.id.layout_checkout_bar).setVisibility(View.GONE);
         } else {

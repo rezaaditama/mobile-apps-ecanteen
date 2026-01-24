@@ -1,19 +1,31 @@
 package com.example.canteen_app;
 
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
 public class Order implements Serializable{
 //    Inisialisasi Variabel
+    @SerializedName("order_id")
     private String orderId;
-    private List<Menu> items;
+    @SerializedName("user_id")
+    private int userId;
+    @SerializedName("pickup_time")
     private String pickupTime;
+    @SerializedName("total_harga")
     private int totalHarga;
+    @SerializedName("is_finished")
     private boolean isFinished;
+    @SerializedName("payment_method")
     private String paymentMethod;
 
-    public Order(String orderId, List<Menu> items, String pickupTime, int totalHarga, String paymentMethod) {
+//    List yang dikirim ke table order_items
+    @SerializedName("items")
+    private List<Menu> items;
+
+    public Order(String orderId, List<Menu> items, String pickupTime, int totalHarga, String paymentMethod, int userId) {
         this.orderId = orderId;
+        this.userId = userId;
         this.items = items;
         this.pickupTime = pickupTime;
         this.totalHarga = totalHarga;
@@ -22,6 +34,7 @@ public class Order implements Serializable{
         for (Menu m : items) {
             m.setParentOrderId(orderId);
             m.setParentPickupTime(pickupTime);
+            m.setPaymentMethod(paymentMethod);
         }
     }
 

@@ -39,7 +39,7 @@ public class StatusQrisActivity extends AppCompatActivity {
         if (menuData != null) {
 //            Mengambil gambar
             if (ivDetailGambarToko != null) {
-                ivDetailGambarToko.setImageResource(menuData.getShopImage());
+                ivDetailGambarToko.setImageResource(menuData.getProductPath());
             }
 
             // Set Data ke UI

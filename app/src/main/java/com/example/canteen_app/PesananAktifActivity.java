@@ -1,10 +1,13 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PesananAktifActivity extends AppCompatActivity {
     //    Mendeklarasikan variabel
@@ -46,19 +53,18 @@ public class PesananAktifActivity extends AppCompatActivity {
         rvPesanan.setLayoutManager(new LinearLayoutManager(this));
 
         // Tombol Kembali
-        findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> {
-            Intent intent = new Intent(PesananAktifActivity.this, BerandaActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish(); // Menutup halaman PesananAktif
+        findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> goToBeranda());
+
+//        Listener tab
+        findViewById(R.id.tabAktif).setOnClickListener(v -> {
+            currentTabIsSelesai = false;
+            showTabContent(false);
         });
-
-        //Tampilkan tab Aktif
-        showTabContent(false); // false berarti isFinished = false (Aktif)
-
-        // Listener Tab
-        findViewById(R.id.tabAktif).setOnClickListener(v -> showTabContent(false));
-        findViewById(R.id.tabSelesai).setOnClickListener(v -> showTabContent(true));
+        findViewById(R.id.tabSelesai).setOnClickListener(v -> {
+            currentTabIsSelesai = true;
+            showTabContent(true);
+        });
+        showTabContent(false);
     }
 
 //    Fungsi tombol kembali
@@ -91,35 +97,61 @@ private void goToBeranda() {
             tvAktif.setTextColor(Color.GRAY);
         }
 
-        // Filter Data per Menu
-        filterDataPerMenu(isSelesai);
+        // Ambil data dari API
+        ambilDataDariServer(isSelesai);
     }
 
-    //    Filter status pemesanan
-    private void filterDataPerMenu(boolean statusCari) {
-        List<Menu> listTampil = new ArrayList<>();
+    private void ambilDataDariServer(boolean statusSelesai) {
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("USER_ID", 1);
 
-        // Ambil riwayat order dari CartManager
-        List<Order> history = CartManager.getInstance().getHistoryList();
+        ApiService apiService = RetrofitClient.getApiService();
+        // Memanggil endpoint: GET /api/orders/user/:user_id
+        apiService.getOrdersByUser(userId).enqueue(new Callback<List<Order>>() {
+            @Override
+            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
 
-        if (history != null) {
-            for (Order order : history) {
-                for (Menu item : order.getItems()) {
-                    if (item.isFinished() == statusCari) {
-                        listTampil.add(item);
+//                Ambil data kalau response nya ada
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Order> allOrders = response.body();
+                    List<Menu> listTampil = new ArrayList<>();
+
+                for (Order order : allOrders) {
+                    // Cek apakah status is_finished dari server sesuai dengan tab yang dipilih
+                    if (order.isFinished() == statusSelesai) {
+                        // Bongkar pesanan
+                        for (Menu item : order.getItems()) {
+                            // Tempelkan data order ke tiap menu
+                            item.setParentOrderId(order.getOrderId());
+                            item.setParentPickupTime(order.getPickupTime());
+                            item.setPaymentMethod(order.getPaymentMethod());
+                            listTampil.add(item);
+                        }
                     }
                 }
+
+                updateUI(listTampil, statusSelesai);
             }
         }
 
-//        Update adapter
-        adapter = new PesananAdapter(this, listTampil);
+//        Kalau gagal
+        @Override
+        public void onFailure(Call<List<Order>> call, Throwable t) {
+            Log.e("API_ERROR", "Gagal load pesanan: " + t.getMessage());
+            Toast.makeText(PesananAktifActivity.this, "Gagal konek ke server", Toast.LENGTH_SHORT).show();
+        }
+        });
+    }
+
+//    Update UI
+    private void updateUI(List<Menu> list, boolean statusSelesai) {
+        adapter = new PesananAdapter(this, list);
         rvPesanan.setAdapter(adapter);
 
-        // Munculkan pesan jika kosong
-        if (listTampil.isEmpty()) {
+//        Kalau pesanan kosong
+        if (list.isEmpty()) {
             tvEmpty.setVisibility(View.VISIBLE);
-            tvEmpty.setText(statusCari ? "Belum ada pesanan selesai" : "Tidak ada pesanan aktif");
+            tvEmpty.setText(statusSelesai ? "Belum ada pesanan selesai" : "Tidak ada pesanan aktif");
         } else {
             tvEmpty.setVisibility(View.GONE);
         }

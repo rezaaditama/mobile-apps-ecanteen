@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class PesananAktifActivity extends AppCompatActivity {
     private TextView tvAktif, tvSelesai, tvEmpty;
     private PesananAdapter adapter;
     private boolean currentTabIsSelesai = false;
+    private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,21 @@ public class PesananAktifActivity extends AppCompatActivity {
         tvAktif = findViewById(R.id.tvAktif);
         tvSelesai = findViewById(R.id.tvSelesai);
         tvEmpty = findViewById(R.id.tvEmptyState);
+        swipeRefresh = findViewById(R.id.swipeRefresh);
 
         rvPesanan.setLayoutManager(new LinearLayoutManager(this));
+
+        // Memanggil ulang data dari server saat ditarik
+        swipeRefresh.setOnRefreshListener(() -> {
+            ambilDataDariServer(currentTabIsSelesai);
+        });
+
+//        Set loading
+        swipeRefresh.setColorSchemeResources(R.color.primary, android.R.color.holo_blue_dark);
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() { goToBeranda(); }
+        });
 
         // Tombol Kembali
         findViewById(R.id.imgKrjArrowLeft).setOnClickListener(v -> goToBeranda());
@@ -102,6 +117,9 @@ private void goToBeranda() {
     }
 
     private void ambilDataDariServer(boolean statusSelesai) {
+        // Mulai animasi loading
+        swipeRefresh.setRefreshing(true);
+
         SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", 1);
 
@@ -111,17 +129,31 @@ private void goToBeranda() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
 
+                // Berhentikan animasi loading
+                swipeRefresh.setRefreshing(false);
+
 //                Ambil data kalau response nya ada
                 if (response.isSuccessful() && response.body() != null) {
                     List<Menu> listTampil = new ArrayList<>();
 
                 for (Order order : response.body()) {
+//                    Cek midtrans
+                    String statusMidtrans = order.getStatusPembayaran();
+                    boolean isFailed = "cancel".equalsIgnoreCase(statusMidtrans) ||
+                            "expire".equalsIgnoreCase(statusMidtrans) ||
+                            "deny".equalsIgnoreCase(statusMidtrans);
+
+                    boolean shouldShow;
+                    if (statusSelesai) {
+                        shouldShow = order.isFinished() || isFailed;
+                    } else {
+                        shouldShow = !order.isFinished() && !isFailed;
+                    }
+
                     // Cek apakah status is_finished dari server sesuai dengan tab yang dipilih
-                    if (order.isFinished() == statusSelesai) {
-                        // Bongkar pesanan
+                    if (shouldShow) {
                         for (Menu item : order.getItems()) {
                             item.convertPathToResourceId(PesananAktifActivity.this);
-                            // Tempelkan data order ke tiap menu
                             item.setParentOrderId(order.getOrderId());
                             item.setParentPickupTime(order.getPickupTime());
                             item.setPaymentMethod(order.getPaymentMethod());
@@ -130,10 +162,11 @@ private void goToBeranda() {
                         }
                     }
                 }
-
-                updateUI(listTampil, statusSelesai);
+                    updateUI(listTampil, statusSelesai);
+                } else {
+                    Log.e("API_STATUS", "Respon gagal atau body kosong");
+                }
             }
-        }
 
 //        Kalau gagal
         @Override

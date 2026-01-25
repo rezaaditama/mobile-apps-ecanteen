@@ -56,13 +56,28 @@ public class StatusQrisActivity extends AppCompatActivity {
                 tvCatatan.setVisibility(View.GONE);
             }
 
+            String statusMidtrans = menuData.getStatusPembayaran();
+
             // Logika Status pesanan
             if (menuData.isFinished()) {
                 tvStatus.setText("Status: Selesai");
                 tvStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+            } else if ("cancel".equalsIgnoreCase(statusMidtrans) || "expire".equalsIgnoreCase(statusMidtrans) || "deny".equalsIgnoreCase(statusMidtrans)) {
+                tvStatus.setText("Status: Gagal / Kedaluwarsa");
+                tvStatus.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
             } else {
-                tvStatus.setText("Status: Siap Diambil");
-                tvStatus.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                if ("Tunai".equalsIgnoreCase(menuData.getPaymentMethod())) {
+                    tvStatus.setText("Status: Bayar di Kasir");
+                    tvStatus.setTextColor(getResources().getColor(android.R.color.holo_blue_light));
+                } else {
+                    if ("settlement".equalsIgnoreCase(statusMidtrans)) {
+                        tvStatus.setText("Status: Lunas - Siap Diambil");
+                        tvStatus.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
+                    } else {
+                        tvStatus.setText("Status: Menunggu Pembayaran");
+                        tvStatus.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                    }
+                }
             }
 
             // Hitung Total & Format Rupiah

@@ -58,21 +58,25 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
 
         // Set data dari Order Induk
         holder.tvOrderId.setText("ID: #" + menu.getParentOrderId());
-        holder.tvWaktuAmbil.setText("Ambil: " + menu.getParentPickupTime());
+        holder.tvWaktuAmbil.setText("Pengambilan: " + menu.getParentPickupTime());
 
-        // Logika Status
+        // Logika Status pembayaran
+        String statusMidtrans = menu.getStatusPembayaran();
         if (menu.isFinished()) {
+            // Status jika sudah selesai/diambil
             holder.tvStatus.setText("Sudah Diambil");
             holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        } else if ("cancel".equalsIgnoreCase(statusMidtrans) || "expire".equalsIgnoreCase(statusMidtrans) || "deny".equalsIgnoreCase(statusMidtrans)) {
+            // Status jika pembayaran gagal
+            holder.tvStatus.setText("Gagal / Expired");
+            holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
         } else {
-//            Kalau pembayaran tunai
+            // Logika berdasarkan metode pembayaran
             if ("Tunai".equalsIgnoreCase(menu.getPaymentMethod())) {
                 holder.tvStatus.setText("Bayar di Kasir");
-                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
+                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_light));
             } else {
-                String statusMidtrans = menu.getStatusPembayaran();
                 if ("settlement".equalsIgnoreCase(statusMidtrans)) {
-                    // Logika Midtrans
                     holder.tvStatus.setText("Lunas - Siap Diambil");
                     holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
                 } else {

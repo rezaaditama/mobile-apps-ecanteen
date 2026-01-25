@@ -18,10 +18,6 @@ public interface ApiService {
     @GET("api/menu/{shop_id}")
     Call<List<Menu>> getMenuByToko(@Path("shop_id") int shopId);
 
-//    Post Order ke Database
-    @POST("api/orders")
-    Call<Void> simpanPesanan(@Body Order order);
-
     // Ambil daftar pesanan berdasarkan User ID
     @GET("api/orders/user/{user_id}")
     Call<List<Order>> getOrdersByUser(@Path("user_id") int userId);
@@ -42,4 +38,8 @@ public interface ApiService {
             @Field("email") String email,
             @Field("nomor_telepon") String telepon
     );
+
+//    Payment Gateway
+    @POST("api/orders")
+    Call<OrderResponse> simpanPesanan(@Body Order order);
 }

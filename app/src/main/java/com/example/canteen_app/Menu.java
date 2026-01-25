@@ -20,6 +20,7 @@ public class Menu implements Serializable {
     //    Join dengan tabel orders_items
     private int qty = 0;
     private String shop_name;
+    private String statusPembayaran;
 
     //Helper
 //    Menampung resource ID path
@@ -99,6 +100,14 @@ public class Menu implements Serializable {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public void setStatusPembayaran(String statusPembayaran) {
+        this.statusPembayaran = statusPembayaran;
+    }
+
+    public String getStatusPembayaran() {
+        return statusPembayaran;
     }
 
     public String getPaymentMethod() {

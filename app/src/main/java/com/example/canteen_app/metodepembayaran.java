@@ -1,6 +1,7 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,28 +48,18 @@ public class metodepembayaran extends AppCompatActivity {
                         Toast.LENGTH_SHORT
                 ).show();
             } else {
-//                Metode Pembayaran
+//                Metode Pembayaran dan jam pengambilan
                 String metode = (selectedId == R.id.rbQris) ? "QRIS" : "Tunai";
-//                Data jam
                 String jamAmbil = getIntent().getStringExtra("PICKUP_TIME");
 
-//                Pemilihan Qris atau Tunai
-                if (metode.equals("QRIS")) {
-                    // Alur QRIS: Tetap ke halaman delay Qris
-                    Intent intent = new Intent(metodepembayaran.this, Qris.class);
-                    intent.putExtra("METODE_BAYAR", metode);
-                    intent.putExtra("PICKUP_TIME", jamAmbil);
-                    startActivity(intent);
-                } else {
-                    // Alur Tunai Langsung proses simpan data
-                    prosesPesananTunai(metode, jamAmbil);
-                }
+            // Jalankan proses order
+                prosesSimpanPesanan(metode, jamAmbil);
             }
         });
     }
 
     // Untuk pembayaran cash
-    private void prosesPesananTunai(String metode, String jam) {
+    private void prosesSimpanPesanan(String metode, String jam) {
 //        Ambil user dari sharedPreferences
         android.content.SharedPreferences sharedPreferences = getSharedPreferences("USER_PREF", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("USER_ID", 1);
@@ -98,20 +88,51 @@ public class metodepembayaran extends AppCompatActivity {
     private void kirimPesananKeServer(Order order) {
 //        API
         ApiService apiService = RetrofitClient.getApiService();
-        apiService.simpanPesanan(order).enqueue(new Callback<Void>() {
+        apiService.simpanPesanan(order).enqueue(new Callback<OrderResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    // Jika sukses di server, baru lakukan aksi lokal
-                    aksiSetelahBerhasil(order);
-                } else {
-                    Toast.makeText(metodepembayaran.this, "Server menolak pesanan: " + response.code(), Toast.LENGTH_LONG).show();
+            public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+
+//                Kalau response berhasil
+                if (response.isSuccessful() && response.body() != null) {
+
+//                    Redirect ke pembayaran
+                    if (order.getPaymentMethod().equalsIgnoreCase("QRIS")) {
+
+//                        Mengambil URL
+                        String redirectUrl = response.body().getRedirectUrl();
+
+                        if (redirectUrl != null && !redirectUrl.isEmpty()) {
+
+                            // Bersihkan keranjang & Simpan ke history lokal dulu
+                            CartManager.getInstance().addOrderToHistory(order);
+                            CartManager.getInstance().clearCart();
+
+//                            Siapkan halaman pesanan aktif
+                            Intent intentPesanan = new Intent(metodepembayaran.this, PesananAktifActivity.class);
+                            intentPesanan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+//                       siapkan Buka Browser
+                            Intent intentBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(redirectUrl));
+                            intentBrowser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                            startActivity(intentPesanan);
+                            startActivity(intentBrowser);
+
+                            Toast.makeText(metodepembayaran.this, "Selesaikan pembayaran di browser", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        }
+                    } else {
+                        aksiSetelahBerhasil(order);
+                        }
+                    } else {
+                    Toast.makeText(metodepembayaran.this, "Server error: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
 //            Kalau API error
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<OrderResponse> call, Throwable t) {
                 Log.e("API_ERROR", "Gagal kirim: " + t.getMessage());
                 Toast.makeText(metodepembayaran.this, "Gagal terhubung ke server. Periksa internet Anda.", Toast.LENGTH_LONG).show();
             }

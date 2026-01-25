@@ -70,9 +70,15 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
                 holder.tvStatus.setText("Bayar di Kasir");
                 holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
             } else {
-                // Jika QRIS, otomatis sudah bayar tinggal ambil
-                holder.tvStatus.setText("Siap Diambil");
-                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
+                String statusMidtrans = menu.getStatusPembayaran();
+                if ("settlement".equalsIgnoreCase(statusMidtrans)) {
+                    // Logika Midtrans
+                    holder.tvStatus.setText("Lunas - Siap Diambil");
+                    holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
+                } else {
+                    holder.tvStatus.setText("Menunggu Pembayaran");
+                    holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_orange_dark));
+                }
             }
         }
 

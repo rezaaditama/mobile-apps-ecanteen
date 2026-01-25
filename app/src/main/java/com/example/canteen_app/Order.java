@@ -18,6 +18,8 @@ public class Order implements Serializable{
     private boolean isFinished;
     @SerializedName("payment_method")
     private String paymentMethod;
+    @SerializedName("status_pembayaran")
+    private String statusPembayaran;
 
 //    List yang dikirim ke table order_items
     @SerializedName("items")
@@ -45,6 +47,7 @@ public class Order implements Serializable{
     public int getTotalHarga() { return totalHarga; }
     public boolean isFinished() { return isFinished; }
     public String getPaymentMethod() { return paymentMethod; }
+    public String getStatusPembayaran() { return statusPembayaran; }
 
 //    Setter
     public void setFinished(boolean finished) { isFinished = finished; }

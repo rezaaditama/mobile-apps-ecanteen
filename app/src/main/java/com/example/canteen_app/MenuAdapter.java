@@ -18,7 +18,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 //    Inisialisasi
     private Context context;
     private List<Menu> menuList;
-    private CardListener listener; // Interface yang kamu buat tadi
+    private CardListener listener;
 
     public MenuAdapter(Context context, List<Menu> menuList, CardListener listener) {
         this.context = context;

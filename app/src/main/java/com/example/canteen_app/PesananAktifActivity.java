@@ -113,10 +113,9 @@ private void goToBeranda() {
 
 //                Ambil data kalau response nya ada
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Order> allOrders = response.body();
                     List<Menu> listTampil = new ArrayList<>();
 
-                for (Order order : allOrders) {
+                for (Order order : response.body()) {
                     // Cek apakah status is_finished dari server sesuai dengan tab yang dipilih
                     if (order.isFinished() == statusSelesai) {
                         // Bongkar pesanan
@@ -126,6 +125,7 @@ private void goToBeranda() {
                             item.setParentOrderId(order.getOrderId());
                             item.setParentPickupTime(order.getPickupTime());
                             item.setPaymentMethod(order.getPaymentMethod());
+                            item.setStatusPembayaran(order.getStatusPembayaran());
                             listTampil.add(item);
                         }
                     }

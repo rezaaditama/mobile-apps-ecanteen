@@ -71,17 +71,24 @@ public class metodepembayaran extends AppCompatActivity {
             return;
         }
 
-//        Buat 1 order ID utama
+//        Generate ID
         String masterOrderId = "INV-" + System.currentTimeMillis();
+
+        // Menghitung Total Harga
         int totalHargaSemua = 0;
         for (Menu item : keranjangSekarang) {
             totalHargaSemua += (item.getProductPrice() * item.getQty());
         }
 
-//        Buat object untuk dikirim ke API
+        // Membuat objek Order baru
         Order orderBaru = new Order(masterOrderId, keranjangSekarang, jam, totalHargaSemua, metode, userId);
 
-//        Kirim ke server
+        // Jika Tunai, set status pembayaran
+        if (metode.equalsIgnoreCase("Tunai")) {
+            orderBaru.setStatusPembayaran("settlement");
+        }
+
+//        Kirim data
         kirimPesananKeServer(orderBaru);
     }
 

@@ -42,4 +42,36 @@ public interface ApiService {
 //    Payment Gateway
     @POST("api/orders")
     Call<OrderResponse> simpanPesanan(@Body Order order);
+
+//    Dashboard admin
+    @GET("api/penjual/dashboard/{user_id}")
+    Call<BerandaPenjualResponse> getDashboardPenjual(@Path("user_id") int userId);
+
+//    List pesanan aktif penjual
+    @GET("api/penjual/pesanan-aktif/{user_id}")
+    Call<List<BerandaPenjualResponse.OrderModel>> getPesananAktif(@Path("user_id") int userId);
+
+//    Ambil detail pesanan
+    @GET("api/penjual/order-detail/{order_id}")
+    Call<BerandaPenjualResponse.OrderModel> getOrderDetail(@Path("order_id") String orderId);
+
+//    Update status pesanan jadi selesai
+    @FormUrlEncoded
+    @POST("api/penjual/selesaikan-pesanan")
+    Call<Void> updateStatusSelesai(@Field("order_id") String orderId);
+
+//    Untuk riwayat pemesanan
+    @GET("api/penjual/riwayat/{user_id}")
+    Call<List<BerandaPenjualResponse.OrderModel>> getRiwayatPenjualan(@Path("user_id") int userId);
+
+//    Update profil penjual
+    @FormUrlEncoded
+    @POST("api/penjual/update-profile")
+    Call<UpdateResponse> updateProfilePenjual(
+            @Field("id") int id,
+            @Field("nama_lengkap") String nama,
+            @Field("email") String email,
+            @Field("nomor_telepon") String telepon,
+            @Field("shop_name") String shopName
+    );
 }

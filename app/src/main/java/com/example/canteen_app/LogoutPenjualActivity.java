@@ -1,8 +1,10 @@
 package com.example.canteen_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,17 +26,28 @@ public class LogoutPenjualActivity extends AppCompatActivity {
             return insets;
         });
 
+//        Ambil komponen berdasarkan ID
         btnCancelLogoutPenjual = findViewById(R.id.btn_cancel_logout_penjual);
         lgtBtnLogoutPenjual = findViewById(R.id.btn_logout_penjual);
 
         lgtBtnLogoutPenjual.setOnClickListener(v -> {
+//            Hapus data
+            SharedPreferences pref = getSharedPreferences("USER_PREF", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.clear();
+            editor.apply();
+
+            Toast.makeText(this, "Berhasil Keluar", Toast.LENGTH_SHORT).show();
+
+//            Pindah ke login
             Intent intent = new Intent(LogoutPenjualActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            finish();
         });
 
         btnCancelLogoutPenjual.setOnClickListener(v -> {
-            Intent intent = new Intent(LogoutPenjualActivity.this, ProfilPenjualActivity.class);
-            startActivity(intent);
+            finish();
         });
     }
 }

@@ -9,14 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananViewHolder> {
 //    Inisialisasi Variabel
-    private Context context;
-    private List<Menu> listMenu;
+    private final Context context;
+    private final List<Menu> listMenu;
 
     public PesananAdapter(Context context, List<Menu> listMenu) {
         this.context = context;
@@ -41,12 +42,14 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
             holder.imgMenu.setImageResource(R.drawable.logo);
         }
 //        set nama toko dan nama menu
-        holder.tvNamaToko.setText(menu.getShopName() != null ? menu.getShopName() : "Toko UIKA");
-        holder.tvNamaMenu.setText(menu.getProductName() + " (x" + menu.getQty() + ")");
+        holder.tvNamaToko.setText(menu.getShopName() != null ? menu.getShopName() : "Toko Kantin");
+        holder.tvNamaMenu.setText(String.format("%s (x%d)", menu.getProductName(), menu.getQty()));
+        holder.tvOrderId.setText(String.format("ID: #%s", menu.getParentOrderId()));
+        holder.tvWaktuAmbil.setText(String.format("Ambil: %s", menu.getParentPickupTime()));
 
 //        Format harga
         int totalHargaItem = menu.getProductPrice() * menu.getQty();
-        holder.tvHarga.setText("Rp " + String.format("%,d", menu.getProductPrice() * menu.getQty()).replace(',', '.'));
+        holder.tvHarga.setText(String.format("Rp %,d", totalHargaItem).replace(',', '.'));
 
         // Tampilkan catatan
         if (menu.getNote() != null && !menu.getNote().isEmpty()) {
@@ -56,43 +59,50 @@ public class PesananAdapter extends RecyclerView.Adapter<PesananAdapter.PesananV
             holder.tvCatatan.setVisibility(View.GONE);
         }
 
-        // Set data dari Order Induk
-        holder.tvOrderId.setText("ID: #" + menu.getParentOrderId());
-        holder.tvWaktuAmbil.setText("Pengambilan: " + menu.getParentPickupTime());
+//        Update UI
+        updateStatusUI(holder, menu);
 
-        // Logika Status pembayaran
-        String statusMidtrans = menu.getStatusPembayaran();
-        if (menu.isFinished()) {
-            // Status jika sudah selesai/diambil
-            holder.tvStatus.setText("Sudah Diambil");
-            holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
-        } else if ("cancel".equalsIgnoreCase(statusMidtrans) || "expire".equalsIgnoreCase(statusMidtrans) || "deny".equalsIgnoreCase(statusMidtrans)) {
-            // Status jika pembayaran gagal
-            holder.tvStatus.setText("Gagal / Expired");
-            holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
-        } else {
-            // Logika berdasarkan metode pembayaran
-            if ("Tunai".equalsIgnoreCase(menu.getPaymentMethod())) {
-                holder.tvStatus.setText("Bayar di Kasir");
-                holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_light));
-            } else {
-                if ("settlement".equalsIgnoreCase(statusMidtrans)) {
-                    holder.tvStatus.setText("Lunas - Siap Diambil");
-                    holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
-                } else {
-                    holder.tvStatus.setText("Menunggu Pembayaran");
-                    holder.tvStatus.setTextColor(context.getResources().getColor(android.R.color.holo_orange_dark));
-                }
-            }
-        }
-
-//        untuk pindah ke halaman detail product
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, StatusQrisActivity.class);
-            // Mengirim seluruh objek menu (Serializable)
             intent.putExtra("ITEM_PESANAN", menu);
             context.startActivity(intent);
         });
+    }
+
+    private void updateStatusUI(PesananViewHolder holder, Menu menu) {
+
+        // Set data dari Order Induk
+        String statusMidtrans = menu.getStatusPembayaran();
+        String paymentMethod = menu.getPaymentMethod();
+
+        if (menu.isFinished()) {
+            holder.tvStatus.setText("Pesanan Selesai");
+            holder.tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark));
+            return;
+        }
+
+        if ("cancel".equalsIgnoreCase(statusMidtrans) ||
+                "expire".equalsIgnoreCase(statusMidtrans) ||
+                "deny".equalsIgnoreCase(statusMidtrans)) {
+            holder.tvStatus.setText("Transaksi Gagal");
+            holder.tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_dark));
+            return;
+        }
+
+        if ("Tunai".equalsIgnoreCase(paymentMethod)) {
+            // Jika Tunai, biasanya status di DB langsung 'settlement'
+            holder.tvStatus.setText("Bayar di Kasir");
+            holder.tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_blue_light));
+        } else {
+            // Untuk Non-Tunai (QRIS/Transfer)
+            if ("settlement".equalsIgnoreCase(statusMidtrans)) {
+                holder.tvStatus.setText("Lunas - Siap Diambil");
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_blue_dark));
+            } else {
+                holder.tvStatus.setText("Menunggu Pembayaran");
+                holder.tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_dark));
+            }
+        }
     }
 
 //    Mengambil total item

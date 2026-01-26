@@ -2,142 +2,42 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:orientation="vertical"
     android:background="@color/krem"
-    android:gravity="center_horizontal">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/krem"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="10dp">
-
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="26dp">
             <ImageButton
                 android:id="@+id/btnBackPesanan"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/arrow_left"
+                android:contentDescription="Back"
                 android:padding="6dp"
-                android:contentDescription="Back" />
-
+                android:src="@drawable/arrow_left" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pesanan Aktif"
                 android:fontFamily="@font/poppins_regular"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Pesanan Aktif"
                 android:textColor="@color/hijau"
-                android:gravity="center" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/orange_muda"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/profil"
-                        android:padding="8dp"/>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="#ORD-1768981359775 • Reza"
-                            android:textColor="#000000"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textStyle="bold"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:background="@color/orange_muda"
-                            android:paddingHorizontal="8dp"
-                            android:paddingVertical="2dp"
-                            android:text="Pesanan Baru"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textColor="#E65100"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2m ago"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="#9E9E9E"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1x Nasi Goreng Ade"
-                        android:fontFamily="@font/poppins_regular"
-                        android:textColor="#424242"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnTerimaPesananPesanan"
-                    android:layout_width="283dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="32dp"
-                    android:background="@drawable/bg_cardpesanan"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="Terima Pesanan"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_pesanan_aktif"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp" />
 </LinearLayout>

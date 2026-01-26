@@ -51,4 +51,7 @@ public class Order implements Serializable{
 
 //    Setter
     public void setFinished(boolean finished) { isFinished = finished; }
+    public void setStatusPembayaran(String statusPembayaran) {
+        this.statusPembayaran = statusPembayaran;
+    }
 }

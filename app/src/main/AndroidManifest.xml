@@ -96,12 +96,6 @@
             android:name=".pesanan"
             android:exported="false" />
         <activity
-            android:name=".pesanan_selesai"
-            android:exported="false" />
-        <activity
-            android:name=".proses_ambil"
-            android:exported="false" />
-        <activity
             android:name=".proses_pesanan"
             android:exported="false" />
         <activity

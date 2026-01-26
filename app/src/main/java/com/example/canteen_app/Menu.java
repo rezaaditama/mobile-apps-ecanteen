@@ -122,5 +122,6 @@ public class Menu implements Serializable {
     public boolean isFinished() {
         return isFinished;
     }
+    public void setFinished(boolean finished) { this.isFinished = finished; }
 
 }

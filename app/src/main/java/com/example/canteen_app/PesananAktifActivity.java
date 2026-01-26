@@ -158,6 +158,7 @@ private void goToBeranda() {
                             item.setParentPickupTime(order.getPickupTime());
                             item.setPaymentMethod(order.getPaymentMethod());
                             item.setStatusPembayaran(order.getStatusPembayaran());
+                            item.setFinished(order.isFinished());
                             listTampil.add(item);
                         }
                     }
